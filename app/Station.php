@@ -150,7 +150,7 @@ class Station extends Model
     	$water_price = LadderWaterPrice::where('company_id', $this->company->id)->where('station_id', $this->id)->first();
     	// return $water_price;
 
-    	$data = $water_price->only('first_order', 'second_order', 'third_order');
+    	$data = $water_price->only('id', 'first_order', 'second_order', 'third_order');
 
     	return $data;
     }
