@@ -103,7 +103,8 @@ class Station extends Model
     	$this->open_num = $this->eqNum(2,1);
     	$this->close_num = $this->eqNum(2,0);
     	$this->Off_line_num = $this->eqNum(2,3);
-    	$this->fault_num = $this->eqNum(2,2);
+        $this->fault_num = $this->eqNum(2,2);
+    	$this->pic = $url = Storage::url($this->pic);
 
     	$data = $this->only('name', 'linkman', 'phone', 'address', 'pic', 'business_hours', 'status', 'eq_sum', 'big_eq_sum', 'lit_eq_sum', 'open_num', 'close_num', 'Off_line_num', 'fault_num');
     	return $data;
