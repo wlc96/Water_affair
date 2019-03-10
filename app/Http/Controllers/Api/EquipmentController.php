@@ -100,9 +100,10 @@ class EquipmentController extends Controller
             return failure('请输入站点联系电话');
         }
 
-        if (!$status = $request->input('status')) 
+        $status = $request->input('status');
+        if (!isset($status)) 
         {
-            return failure('请选择营业状态');
+            return failure('请选择状态');
         }
 
         if (!$business_hours = $request->input('business_hours')) 
