@@ -71,6 +71,11 @@ class City extends Model
                         'eqs' => $feqs,
                     ];
                 }
+                if (!$s_citys->lng) 
+                {
+                    $s_citys->lng = $t_citys->lng;
+                    $s_citys->lat = $t_citys->lat;
+                }
                 $childs[] = 
                 [
                     'citys' => $s_citys->only('id', 'name', 'lng', 'lat'),
