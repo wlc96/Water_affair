@@ -529,6 +529,14 @@ class OperationController extends Controller
         });
     }
 
+    /**
+     * 巡检人员编辑
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-11
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
     public function examinerEdit(Request $request)
     {
         $company = self::checkCompany($request);

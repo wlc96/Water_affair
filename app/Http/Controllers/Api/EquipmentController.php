@@ -251,7 +251,7 @@ class EquipmentController extends Controller
             return failure('请输入三阶水价');
         }
 
-        return DB::transaction(function() use ($first_order, $second_order, $third_order)
+        return DB::transaction(function() use ($water_price, $first_order, $second_order, $third_order)
         {
             $data = $water_price->edit($first_order, $second_order, $third_order);
 

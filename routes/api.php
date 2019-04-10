@@ -14,8 +14,8 @@ use Illuminate\Http\Request;
 */
 Route::middleware('ajax')->namespace('Api')->group(function()
 {
-	//添加管理员接口，供自己时用
-	Route::post('admin/add', 'AdminController@adminAdd');
+	// //添加管理员接口，供自己时用
+	// Route::post('admin/add', 'AdminController@adminAdd');
 
 	//管理员登陆接口
 	Route::post('admin/login', 'AdminController@login');
