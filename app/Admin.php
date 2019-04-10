@@ -103,6 +103,14 @@ class Admin extends Model
                 $role_name[] = $role_admin_bind->role->name;
             }
             $role_name = implode(',', $role_name);
+
+            $powers = RoleAdminDirectoryBind::where('admin_id', $value->id)->get();
+            $directorys = [];
+            foreach ($powers as $power) 
+            {
+                $directorys[] = $power->directory->name;
+            }
+            $directorys = implode(',', $directorys); //不同角色目录重复
             $data = 
             [
                 'id' => $value->id,
@@ -112,6 +120,7 @@ class Admin extends Model
                 'email' => $value->email,
                 'created_at' => $value->created_at,
                 'role_name' => $role_name,
+                'directorys' => $directorys,
             ];
 
             return $data;
