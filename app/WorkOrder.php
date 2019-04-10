@@ -102,9 +102,9 @@ class WorkOrder extends Model
      * @param    User       $user     [description]
      * @param    [type]     $eq_num   [description]
      */
-    public static function add(Company $company, User $user, Servicing $operator, $phone, $type, $eq_num)
+    public static function add(Company $company, Station $station, User $user, Servicing $operator, $phone, $type, $eq_num)
     {
-    	return DB::transaction(function() use ($company, $user, $operator, $phone, $type, $eq_num)
+    	return DB::transaction(function() use ($company, $station, $user, $operator, $phone, $type, $eq_num)
         {
 	    	if (is_array($eq_num)) 
 	    	{
@@ -116,7 +116,8 @@ class WorkOrder extends Model
 	    	[
 	    		'company_id' => $company->id,
 	    		'number' => 'YMZH'.substr(str_shuffle($str),4,16),
-	    		'user_id' => $user->id,
+                'user_id' => $user->id,
+	    		'station_id' => $station->id,
 	    		'link_phone' => $phone,
 	    		'equipment_id' => $eq_num,
 	    		'type' => $type,

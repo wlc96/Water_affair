@@ -117,6 +117,16 @@ class ManagementController extends Controller
     		return failure('该用户不存在');
     	}
 
+        if (!$station_id = $request->input('station_id')) 
+        {
+            return failure('请输入站点id');
+        }
+
+        if (!$station = Station::where('station_id', $station_id)->first()) 
+        {
+            return failure('该站点不存在');
+        }
+
     	if (!$phone = $request->input('phone')) 
     	{
     		return failure('请输入联系电话');
@@ -142,7 +152,7 @@ class ManagementController extends Controller
     		return failure('请输入水表编号');
     	}
 
-    	$data = WorkOrder::add($company, $user, $operator, $phone, $type, $eq_num);
+    	$data = WorkOrder::add($company, $station, $user, $operator, $phone, $type, $eq_num);
 
     	return success(['data' => $data]);
     }
