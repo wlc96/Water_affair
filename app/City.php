@@ -16,7 +16,79 @@ class City extends Model
 
     public static function myCityTree(Company $company)
     {
-    	return self::cityTree();
+        $stations = Station::where('company_id', $company->id)->get();
+
+        $citydatas = [];
+        foreach ($stations as $station) 
+        {
+            foreach ($citydatas as $citydata) 
+            {
+                if ($station->t_city_id == $citydata['citys']['id']) 
+                {
+                     continue 2;
+                }
+            }
+            $t_citys = self::where('id', $station->t_city_id)->first();
+            $lstations = Station::where('t_city_id', $t_citys->id)->get();
+           
+            $eqs = 0;
+            $childs = [];
+            foreach ($lstations as $lstation) 
+            {
+                $eqs = $eqs + count(Equipment::where('station_id', $lstation->id)->get());
+                foreach ($childs as $child) 
+                {
+                    if ($lstation->s_city_id == $child['citys']['id']) 
+                    {
+                        continue 2;
+                    }
+                }
+                $s_citys = self::where('id', $lstation->s_city_id)->first();
+                $rstations = Station::where('s_city_id', $s_citys->id)->get();
+                $leqs = 0;
+                $lchilds = [];
+                foreach ($rstations as $rstation) 
+                {
+                    $leqs = $leqs + count(Equipment::where('station_id', $rstation->id)->get());
+                    foreach ($lchilds as $lchild) 
+                    {
+                        if ($rstation->city_id == $lchild['citys']['id']) 
+                        {
+                            continue 2;
+                        }
+                    }
+                    $f_citys = self::where('id', $rstation->city_id)->first();
+                    $fstations = Station::where('city_id', $f_citys->id)->get();
+                    $feqs = 0;
+                    foreach ($fstations as $fstation) 
+                    {
+                        $feqs = $feqs + count(Equipment::where('station_id', $fstation->id)->get());
+                    }
+
+                    $lchilds[] = 
+                    [
+                        'citys' => $f_citys->only('id', 'name', 'lng', 'lat'),
+                        'eqs' => $feqs,
+                    ];
+                }
+                $childs[] = 
+                [
+                    'citys' => $s_citys->only('id', 'name', 'lng', 'lat'),
+                    'eqs' => $leqs,
+                    'chid' => ($lchilds),
+                ];
+            }
+            $citydatas[] = 
+            [
+                'citys' => $t_citys->only('id', 'name', 'lng', 'lat'),
+                'eqs' => $eqs,
+                'child' => $childs,
+            ];
+        }
+
+        $data = ($citydatas);
+
+        return $data;
     } 
 
     public static function cityTree()
