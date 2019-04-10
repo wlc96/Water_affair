@@ -122,7 +122,7 @@ class ManagementController extends Controller
             return failure('请输入站点id');
         }
 
-        if (!$station = Station::where('station_id', $station_id)->first()) 
+        if (!$station = Station::where('id', $station_id)->first()) 
         {
             return failure('该站点不存在');
         }
