@@ -111,6 +111,9 @@ Route::middleware('ajax')->namespace('Api')->group(function()
 		Route::prefix('Operation')->group(function()
 		{
 			//故障处理列表接口
+			Route::post('servicing/list', 'OperationController@servicingList');
+
+			//故障处理列表接口
 			Route::post('fault/list', 'OperationController@faultList');
 
 			//故障编辑列表接口

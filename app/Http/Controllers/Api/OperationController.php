@@ -175,7 +175,8 @@ class OperationController extends Controller
             return failure('该人员不存在');
         }
 
-        if (!$status = $request->input('status')) 
+        $status = $request->input('status');
+        if (!isset($status)) 
         {
             return failure('请选择状态');
         }
@@ -183,6 +184,29 @@ class OperationController extends Controller
         $explain = ($request->input('explain')?$request->input('explain'):'');
 
         $data = $order->edit($user, $servicing, $status, $explain);
+
+        return success(['data' => $data]);
+    }
+
+    /**
+     * 维修人员列表
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-10
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function servicingList(Request $request)
+    {
+        $company = self::checkCompany($request);
+
+        $servicings = Servicing::where('company_id', $company->id)->get();
+
+        $data = [];
+        foreach ($servicings as $servicing) 
+        {
+            $data [] = $servicing->only('id', 'name');
+        }
 
         return success(['data' => $data]);
     }
@@ -297,7 +321,7 @@ class OperationController extends Controller
         {
             return failure('请选择状态');
         }
-        
+
         $data = $event->edit($status);
 
         return success(['data' => $data]);
