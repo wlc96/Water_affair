@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Company;
 use App\Directory;
 use App\Role;
+use App\RoleAdminBind;
 use App\Admin;
 use App\RoleDirectoryBind;
 use DB;
@@ -49,6 +50,43 @@ class SystemController extends Controller
         $company = self::checkCompany($request);
         $pre_page = ($request->input('pre_page')?$request->input('pre_page'):10);
         $data = Role::list($company, $pre_page);
+
+        return success(['data' => $data]);
+    }
+
+    /**单条角色
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-10
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function roleInfo(Request $request)
+    {
+        $company = self::checkCompany($request);
+        if (!$role_id = $request->input('role_id')) 
+        {
+            return failure('请选择角色id');
+        }
+
+        if (!$role = Role::where('id', $role_id)->first()) 
+        {
+            return failure('该角色不存在');
+        }
+
+        $directorys = RoleDirectoryBind::where('role_id', $role->id)->get();
+        $name = [];
+        foreach ($directorys as $directory) 
+        {
+            $name[] = $directory->directory->name;
+        }
+        $name = implode(',', $name);
+        $data = 
+        [
+            'name' => $role->name,
+            'directorys' => $name,
+            'explain' => $role->explain,
+        ];
 
         return success(['data' => $data]);
     }
@@ -261,6 +299,47 @@ class SystemController extends Controller
     	$data = Admin::list($company, $pre_page);
 
     	return success(['data' => $data]);
+    }
+
+    /**单条管理员
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-10
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function adminInfo(Request $request)
+    {
+        $company = self::checkCompany($request);
+
+        if (!$admin_id = $request->input('admin_id')) 
+        {
+            return failure('请选择管理员');
+        }
+
+        if (!$admin = Admin::where('id', $admin_id)->first()) 
+        {
+            return failure('该管理员不存在');
+        }
+
+        $role_admin_binds = RoleAdminBind::where('admin_id', $admin->id)->get();
+        $role_name = [];
+        foreach ($role_admin_binds as $role_admin_bind) 
+        {
+            $role_name[] = $role_admin_bind->role->name;
+        }
+        $role_name = implode(',', $role_name);
+        $data = 
+        [
+            'name' => $admin->name,
+            'relname' => $admin->relname,
+            'phone' => $admin->phone,
+            'email' => $admin->email,
+            'role_name' => $role_name,
+        ];
+
+        return success(['data' => $data]);
+
     }
 
     /**

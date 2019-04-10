@@ -119,6 +119,9 @@ Route::middleware('ajax')->namespace('Api')->group(function()
 			//事件列表接口
 			Route::post('event/list', 'OperationController@eventList');
 
+			//事件单条接口
+			Route::post('event/info', 'OperationController@eventInfo');
+
 			//事件编辑接口
 			Route::post('event/edit', 'OperationController@eventEdit');
 
@@ -127,6 +130,9 @@ Route::middleware('ajax')->namespace('Api')->group(function()
 
 			//工单处理列表接口
 			Route::post('order/list', 'OperationController@orderList');
+
+			//单条工单信息接口
+			Route::post('order/info', 'OperationController@orderInfo');
 
 			//工单编辑列表接口
 			Route::post('order/edit', 'OperationController@orderEdit');
@@ -140,14 +146,20 @@ Route::middleware('ajax')->namespace('Api')->group(function()
 			//巡检计划列表接口
 			Route::post('patrolPlan/list', 'OperationController@patrolPlanList');
 
+			//巡检计划列表接口
+			Route::post('patrolPlan/info', 'OperationController@patrolPlanInfo');
+
 			//编辑巡检计划接口
 			Route::post('patrolPlan/edit', 'OperationController@patrolPlanEdit');
 
-			//编辑巡检计划接口
+			//删除巡检计划接口
 			Route::post('patrolPlan/delete', 'OperationController@patrolPlanRemove');
 
 			//巡检人列表接口
 			Route::post('examiner/list', 'OperationController@examinerList');
+
+			//巡检人单条接口
+			Route::post('examiner/info', 'OperationController@examinerInfo');
 
 			//添加巡检人接口
 			Route::post('examiner/add', 'OperationController@examinerAdd');
@@ -168,6 +180,9 @@ Route::middleware('ajax')->namespace('Api')->group(function()
 			//角色列表接口
 			Route::post('role/list', 'SystemController@roleList');
 
+			//角色单条接口
+			Route::post('role/info', 'SystemController@roleInfo');
+
 			//增加角色接口
 			Route::post('role/add', 'SystemController@roleAdd');
 
@@ -182,6 +197,9 @@ Route::middleware('ajax')->namespace('Api')->group(function()
 
 			//管理员列表接口
 			Route::post('admin/list', 'SystemController@adminList');
+
+			//管理员单条接口
+			Route::post('admin/info', 'SystemController@adminInfo');
 
 			//编辑管理员接口
 			Route::post('admin/edit', 'SystemController@adminEdit');

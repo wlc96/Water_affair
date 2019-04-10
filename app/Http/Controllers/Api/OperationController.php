@@ -102,6 +102,39 @@ class OperationController extends Controller
     }
 
     /**
+     * 单挑工单信息
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-10
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function orderInfo(Request $request)
+    {
+        $company = self::checkCompany($request);
+        if (!$order_id = $request->input('order_id')) 
+        {
+            return failure('请输入工单id');
+        }
+
+        if (!$order = Order::where('id', $order_id)->first()) 
+        {
+            return failure('该工单不存在');
+        }
+
+        $re = ('App\\'.($order->type))::where('id', $order->order_id)->first();
+        $data = 
+        [
+            'user_name' => $re->user->relname,
+            'phone' => $re->user->phone,
+            'operation' => $re->servicing->id,
+            'status' => $re->status,
+        ];
+
+        return success(['data' => $data]);
+    }
+
+    /**
      * 工单编辑
      * Please don't touch my code.
      * @Author   wulichuan
@@ -199,6 +232,40 @@ class OperationController extends Controller
         $pre_page = ($request->input('pre_page')?$request->input('pre_page'):10);
 
         $data = Event::list($company, $number, $start, $end, $pre_page);
+
+        return success(['data' => $data]);
+    }
+
+    /**
+     * 单条事件
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-10
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function eventInfo(Request $request)
+    {
+        $company = self::checkCompany($request);
+        
+        if (!$event_id = $request->input('event_id')) 
+        {
+            return failure('请输入事件id');
+        }
+
+        if (!$event = Event::where('id', $event_id)->first()) 
+        {
+            return failure('该事件不存在');
+        }
+
+        $re = ('App\\'.($event->type))::where('id', $event->order_id)->first();
+            $data = 
+            [
+                'type' => $event->type,
+                'station' => $re->station->id,
+                'man' => $event->report_user_id,
+                'status' => $re->status,
+            ];
 
         return success(['data' => $data]);
     }
@@ -351,6 +418,42 @@ class OperationController extends Controller
     }
 
     /**
+     * 单条巡检记录
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-10
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function patrolPlanInfo(Request $request)
+    {
+        $company = self::checkCompany($request);
+
+        if (!$plan_id = $request->input('plan_id')) 
+        {
+            return failure('请选择巡检计划');
+        }
+
+        if (!$plan = InspectionPlan::where('id', $plan_id)->first()) 
+        {
+            return failure('巡检计划不存在');
+        }
+
+        $data = 
+        [
+            'name' => $plan->name,
+            'station' => $plan->station->id,
+            'type' => $plan->type,
+            'xobject' => $plan->xobject,
+            'cycle' => $plan->cycle,
+            'examiner' => $plan->examiner->id,
+            'time' => $plan->time,
+        ];
+
+        return success(['data' => $data]);
+    }
+
+    /**
      * 修改巡检计划
      * Please don't touch my code.
      * @Author   wulichuan
@@ -469,6 +572,38 @@ class OperationController extends Controller
         $pre_page = ($request->input('pre_page')?$request->input('pre_page'):10);
 
         $data = Examiner::list($company, $pre_page);
+
+        return success(['data' => $data]);
+    }
+
+    /**
+     * 单条巡检人员记录
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-10
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function examinerInfo(Request $request)
+    {
+        $company = self::checkCompany($request);
+        if (!$examiner_id = $request->input('examiner_id')) 
+        {
+            return failure('请选择巡检人员');
+        }
+
+        if (!$examiner = Examiner::where('id', $examiner_id)->first()) 
+        {
+            return failure('该巡检人员不存在');
+        }
+
+        $data = 
+            [
+                'relname' => $examiner->relname,
+                'name' => $examiner->name,
+                'phone' => $examiner->phone,
+                'station' => $examiner->station->id,
+            ];
 
         return success(['data' => $data]);
     }

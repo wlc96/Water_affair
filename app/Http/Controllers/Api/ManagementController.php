@@ -67,7 +67,7 @@ class ManagementController extends Controller
 
     	$data = WorkOrder::list($company, $pre_page);
 
-    	return success([$data]);
+    	return success(['data' => $data]);
     }
 
     /**
