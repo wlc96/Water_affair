@@ -84,6 +84,7 @@ class WorkOrder extends Model
                 'created_at' => $value->created_at,
                 'operator' => $value->servicing->name,
                 'phone' => $value->servicing->phone,
+                'status' => $value->status,
             ];
             return $data;
         });
