@@ -292,7 +292,11 @@ class OperationController extends Controller
             return failure('该事件不存在');
         }
 
-        if (!$status = $request->input('status')) 
+        if (isset($request->input('status'))) 
+        {
+            $status = $request->input('status');
+        }
+        else
         {
             return failure('请选择状态');
         }
