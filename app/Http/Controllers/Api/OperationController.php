@@ -125,7 +125,7 @@ class OperationController extends Controller
         $re = ('App\\'.($order->type))::where('id', $order->order_id)->first();
         $data = 
         [
-            'user_name' => $re->user->relname,
+            'user_name' => $re->user->name,
             'phone' => $re->user->phone,
             'operation' => $re->servicing->id,
             'status' => $re->status,
