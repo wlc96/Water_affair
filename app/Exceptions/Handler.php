@@ -43,11 +43,66 @@ class Handler extends ExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Exception  $e
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Exception $e)
     {
-        return parent::render($request, $exception);
+        $path = $request->path();
+
+        if($e->getPrevious() && $e->getPrevious() instanceof \CustomException )
+        {
+            $e = $e->getPrevious();
+        }
+
+        $statusCode = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
+
+        $format = $request->input('format');
+
+        $message = $e->getMessage();
+
+        if($request->ajax() || in_array($format, ['json', 'jsonp'])){
+
+            $data = [
+                'result' => false,
+                'message' => $message,
+            ];
+
+            if($e instanceof \CustomException)
+            {
+                $statusCode = 200;
+
+                $data = $data + $e->data;
+            }
+
+            if($code = $e->getCode())
+            {
+                $data['error_code'] = $code;
+            }
+
+            if($format == 'jsonp')
+            {
+                return response()->jsonp($request->input('callback'), $data, $statusCode);                
+            }
+
+            return response()->json($data, $statusCode);
+        }
+
+        if(!config('app.debug') && $statusCode != 503)
+        {
+            if($statusCode == 404)
+            {
+                return response()->view('errors.404', array(), 404);
+            }
+
+            if($e instanceof \CustomException)
+            {
+                return response()->view('errors.custome', compact('statusCode', 'message'), $statusCode);
+            }
+
+            return response()->view('errors.500', compact('statusCode'), $statusCode);
+        }
+
+        return parent::render($request, $e);
     }
 }
