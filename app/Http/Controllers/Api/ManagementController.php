@@ -63,11 +63,11 @@ class ManagementController extends Controller
     {
     	$company = self::checkCompany($request);
 
-    	$pre_page = ($request->input('pre_page')?$request->input('pre_page'):10);
+    	$pre_page = ($request->input('pre_page')?$request->input('pre_page'):2);
 
     	$data = WorkOrder::list($company, $pre_page);
 
-    	return success(['data' => $data]);
+    	return success([$data]);
     }
 
     /**
