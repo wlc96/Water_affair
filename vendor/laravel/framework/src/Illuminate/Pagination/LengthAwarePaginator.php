@@ -161,7 +161,7 @@ class LengthAwarePaginator extends AbstractPaginator implements Arrayable, Array
     public function toArray()
     {
         return [
-            'current_page' => $this->currentPage(),
+            'draw' => $this->currentPage(),
             'data' => $this->items->toArray(),
             'first_page_url' => $this->url(1),
             'from' => $this->firstItem(),
@@ -171,8 +171,8 @@ class LengthAwarePaginator extends AbstractPaginator implements Arrayable, Array
             'path' => $this->path,
             'per_page' => $this->perPage(),
             'prev_page_url' => $this->previousPageUrl(),
-            'to' => $this->lastItem(),
-            'total' => $this->total(),
+            'recordsFiltered' => $this->lastItem(),
+            'recordsTotal' => $this->total(),
         ];
     }
 
