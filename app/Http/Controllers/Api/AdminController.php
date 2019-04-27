@@ -74,10 +74,10 @@ class AdminController extends Controller
             return failure('密码不能为空');
         }
 
-        if(!$admin = Admin::where('name', $name)->where('status', 0)->first()) 
-        {
-            return failure('该用户名不存在');
-        }
+        // if(!$admin = Admin::where('name', $name)->where('status', 0)->first()) 
+        // {
+        //     return failure('该用户名不存在');
+        // }
 
         if(!$admin->checkPassword($password)) 
         {
