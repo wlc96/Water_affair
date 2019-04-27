@@ -37,6 +37,23 @@ class SystemController extends Controller
     }
 
     /**
+     * 角色列表
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-25
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function roleList(Request $request)
+    {
+        $company = self::checkCompany($request);
+        $pre_page = ($request->input('pre_page')?$request->input('pre_page'):10);
+        $data = Role::list($company, $pre_page);
+
+        return success(['data' => $data]);
+    }
+
+    /**
      * 增加角色
      * Please don't touch my code.
      * @Author   wulichuan
@@ -68,15 +85,20 @@ class SystemController extends Controller
     		return failure('目录需是数组');
     	}
 
-    	return DB::transaction(function() use($company, $name, $directory_ids)
+        if (!$explain = $request->input('explain')) 
+        {
+            return failure('请添加说明');
+        }
+
+    	return DB::transaction(function() use($company, $name, $directory_ids, $explain)
     	{
-    		$role = Role::add($company, $name);
+    		$role = Role::add($company, $name, $explain);
     		foreach ($directory_ids as $directory_id) 
     		{
     			$role_directory_bind = RoleDirectoryBind::add($company, $role, $directory_id);
     		}
 
-    		return success(['data' => $rloe]);
+    		return success(['data' => $role]);
     	});
     }
 
@@ -181,11 +203,45 @@ class SystemController extends Controller
     		return failure('目录需是数组');
     	}
 
-    	return DB::transaction(function() use($role, $name, $directory_ids)
+        if (!$explain = $request->input('explain')) 
+        {
+            return failure('请添加说明');
+        }
+
+    	return DB::transaction(function() use($role, $name, $directory_ids, $explain)
     	{
-    		$data = $role->edit($name, $directory_ids);
+    		$data = $role->edit($name, $directory_ids, $explain);
     		return success(['data' =>$data]);
     	});
+    }
+
+    /**
+     * 删除角色
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-25
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function roleDelete(Request $request)
+    {
+        $company = self::checkCompany($request);
+        if (!$role_id = $request->input('role_id')) 
+        {
+            return failure('请选择角色id');
+        }
+
+        if (!$role = Role::where('id', $role_id)->first()) 
+        {
+            return failure('该角色不存在');
+        }
+
+        return DB::transaction(function() use($role)
+        {
+            $data = $role->remove();
+            return success(['data' =>$data]);
+        });
+
     }
 
     /**
@@ -207,6 +263,14 @@ class SystemController extends Controller
     	return success(['data' => $data]);
     }
 
+    /**
+     * 编辑管理员
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-25
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
     public function adminEdit(Request $request)
     {
     	$company = self::checkCompany($request);
@@ -216,7 +280,7 @@ class SystemController extends Controller
     		return failure('请选择管理员');
     	}
 
-    	if ($admin = Admin::where('id', $admin_id)->first()) 
+    	if (!$admin = Admin::where('id', $admin_id)->first()) 
     	{
     		return failure('该管理员不存在');
     	}
@@ -254,6 +318,35 @@ class SystemController extends Controller
 
     		return success(['data' =>$data]);
     	});
+    }
+
+    /**
+     * 删除管理员
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-25
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function adminDelete(Request $request)
+    {
+        $company = self::checkCompany($request);
+
+        if (!$admin_id = $request->input('admin_id')) 
+        {
+            return failure('请选择管理员');
+        }
+
+        if (!$admin = Admin::where('id', $admin_id)->first()) 
+        {
+            return failure('该管理员不存在');
+        }
+
+        return DB::transaction(function() use($admin)
+        {
+            $data = $admin->remove();
+            return success(['data' =>$data]);
+        });
     }
 
 

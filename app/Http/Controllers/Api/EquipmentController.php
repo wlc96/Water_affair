@@ -7,10 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Station;
 use App\Company;
 use App\EqChange;
+use App\Equipment;
 use App\EqStop;
 use App\EqData;
 use App\EqRecovery;
 use Carbon\Carbon;
+use App\LadderWaterPrice;
+use DB;
 
 
 
@@ -61,15 +64,199 @@ class EquipmentController extends Controller
     }
 
     /**
-     * 单一站点设备列表
+     * 编辑站点信息
      * Please don't touch my code.
      * @Author   wulichuan
-     * @DateTime 2019-04-13
+     * @DateTime 2019-04-24
      * @param    Request    $request [description]
      * @return   [type]              [description]
      */
-    public function equipmentList(Request $request)
+    public function stationInfoEdit(Request $request)
     {
+        $company = self::checkCompany($request);
+
+        if(!$station_id = $request->input('station_id'))
+        {
+            return failure('请输入站点id');
+        }
+
+        if(!$station = Station::where('id', $station_id)->first())
+        {
+            return failure('该站点不存在');
+        }
+
+        if (!$name = $request->input('name')) 
+        {
+            return failure('请输入站点名');
+        }
+
+        if (!$address = $request->input('address')) 
+        {
+            return failure('请输入地址');
+        }
+
+        if (!$phone = $request->input('phone')) 
+        {
+            return failure('请输入站点联系电话');
+        }
+
+        if (!$status = $request->input('status')) 
+        {
+            return failure('请选择营业状态');
+        }
+
+        if (!$business_hours = $request->input('business_hours')) 
+        {
+            return failure('请输入营业时间');
+        }
+
+        $path = 0;
+        if ($request->hasFile('photo') && $request->file('photo')->isValid()) 
+        {
+            $photo = $request->file('photo');
+            $extension = $photo->extension();
+            $pname = md5($company->name.$company->id);
+            $path = $photo->storeAs('photo', $pname.'.'.$extension);
+        }
+
+        return DB::transaction(function() use ($station, $name, $address, $phone, $status, $path, $business_hours)
+        {
+            $data =  $station->edit($name, $address, $phone, $status, $path, $business_hours);
+
+            return success(['data' => $data]);
+        });
+
+    }
+
+    /**
+     * 水表列表
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-25
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function eqList(Request $request)
+    {
+        $company = self::checkCompany($request);
+
+        if(!$station_id = $request->input('station_id'))
+        {
+            return failure('请输入站点id');
+        }
+
+        if(!$station = Station::where('id', $station_id)->first())
+        {
+            return failure('该站点不存在');
+        }
+
+        $pre_page = ($request->input('pre_page')?$request->input('pre_page'):10);
+
+        $data = Equipment::list($station, $pre_page);
+        return success(['data' => $data]);
+    }
+
+    /**
+     * 设备状态编辑
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-25
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function eqStatusEdit(Request $request)
+    {
+        $company = self::checkCompany($request);
+
+        if(!$equipment_id = $request->input('equipment_id'))
+        {
+            return failure('请输入设备id');
+        }
+
+        if(!$equipment = Equipment::where('id', $equipment_id)->first())
+        {
+            return failure('该设备不存在');
+        }
+
+        if (!$operate = $request->input('operate')) 
+        {
+            return failure('请选择操作');
+        }
+
+        $data = $equipment->statusEdit($operate);
+
+        return success(['data' => $data]);
+    }
+
+    /**
+     * 站点阶梯水价
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-24
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function stationInfoX(Request $request)
+    {
+        $company = self::checkCompany($request);
+
+        if(!$station_id = $request->input('station_id'))
+        {
+            return failure('请输入站点id');
+        }
+
+        if(!$station = Station::where('id', $station_id)->first())
+        {
+            return failure('该站点不存在');
+        }
+
+        $data = $station->xinfo();
+        return success(['data' => $data]);
+    }
+
+    /**
+     * 阶梯水价调整
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-24
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function waterPricesEdit(Request $request)
+    {
+        $company = self::checkCompany($request);
+
+        if (!$water_price_id = $request->input('water_price_id')) 
+        {
+            return failure('请选择阶梯水价');
+        }
+
+        if (!$water_price = LadderWaterPrice::where('id', $water_price_id)->first()) 
+        {
+            return failure('该阶梯水价不存在');
+        }
+
+        if (!$first_order = $request->input('first_order')) 
+        {
+            return failure('请输入一阶水价');
+        }
+
+        if (!$second_order = $request->input('second_order')) 
+        {
+            return failure('请输入二阶水价');
+        }
+
+        if (!$third_order = $request->input('third_order')) 
+        {
+            return failure('请输入三阶水价');
+        }
+
+        return DB::transaction(function() use ($first_order, $second_order, $third_order)
+        {
+            $data = $water_price->edit($first_order, $second_order, $third_order);
+
+            return success(['data' => $data]);
+        });
 
     }
 

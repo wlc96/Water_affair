@@ -62,6 +62,26 @@ class Admin extends Model
     }
 
     /**
+     * 获取目录权限
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-25
+     * @return   [type]     [description]
+     */
+    public function getDirectory()
+    {
+        $role_admin_directory_binds = RoleAdminDirectoryBind::where('admin_id', $this->id)->get();
+
+        $directorys = [];
+        foreach ($role_admin_directory_binds as $role_admin_directory_bind) 
+        {
+            $directorys[] = $role_admin_directory_bind->directory->name;
+        }
+
+        return $directorys;
+    }
+
+    /**
      * 管理员列表
      * Please don't touch my code.
      * @Author   wulichuan
@@ -72,7 +92,7 @@ class Admin extends Model
      */
     public static function list(Company $company, $pre_page)
     {
-        $admins = self::where('company_id', $company->id)->paginate($pre_page);
+        $admins = self::where('company_id', $company->id)->where('status', 0)->paginate($pre_page);
 
         $admins = paginate_walk($admins, function($value, $key)
         {
@@ -85,6 +105,7 @@ class Admin extends Model
             $role_name = implode(',', $role_name);
             $data = 
             [
+                'id' => $value->id,
                 'name' => $value->name,
                 'relname' => $value->relname,
                 'phone' => $value->phone,
@@ -129,16 +150,73 @@ class Admin extends Model
         return true;
     }
 
+    /**修改管理员之后，修改管理员与目录绑定
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-25
+     * @param    [type]     $role_ids [description]
+     * @return   [type]               [description]
+     */
     public function afterEdit($role_ids)
     {
         $role_admin_binds = RoleAdminBind::where('admin_id', $this->id)->get();
+        $old_role_ids = [];
         foreach ($role_admin_binds as $role_admin_bind) 
         {
-            // if (!in_array($role_admin_bind->role_id, $)) 
-            // {
-            //     # code...
-            // }
+            if (!in_array($role_admin_bind->role_id, $role_ids)) 
+            {
+                $role_admin_directory_binds = RoleAdminDirectoryBind::where('role_admin_bind_id', $role_admin_bind->id)->get();
+                RoleAdminDirectoryBind::allDelete($role_admin_directory_binds);
+                $role_admin_bind->delete();
+            }
+        $old_role_ids[] = $role_admin_bind->role_id;
         }
+
+        foreach ($role_ids as $role_id) 
+        {
+            if (!in_array($role_id, $old_role_ids)) 
+            {
+                $role_admin_bind = RoleAdminBind::add($this->company, $this, $role_id);
+                $role = Role::where('id', $role_id)->first();
+                if (!$role) 
+                {
+                    return failure('角色不存在');
+                }
+                $role_directory_binds = $role->getBindDirectory();
+                foreach ($role_directory_binds as $role_directory_bind) 
+                {
+                    RoleAdminDirectoryBind::add($role_admin_bind, $role_directory_bind);
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * 删除管理员
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-25
+     * @return   [type]     [description]
+     */
+    public function remove()
+    {
+        $rloe_admin_binds = RoleAdminBind::where('admin_id', $this->id)->get();
+        foreach ($rloe_admin_binds as $role_admin_bind) 
+        {
+            $role_admin_bind->delete();
+        }
+
+        $role_admin_directory_binds = RoleAdminDirectoryBind::where('admin_id', $this->id)->get();
+        foreach ($role_admin_directory_binds as $role_admin_directory_bind) 
+        {
+            $role_admin_directory_bind->delete();
+        }
+
+        $this->status = 1;
+
+        return $this->save();
     }
 
     /**

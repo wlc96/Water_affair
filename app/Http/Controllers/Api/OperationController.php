@@ -15,6 +15,8 @@ use App\User;
 use App\Examiner;
 use App\Station;
 use App\InspectionPlan;
+use DB;
+
 
 
 class OperationController extends Controller
@@ -314,6 +316,14 @@ class OperationController extends Controller
         return success(['data' => $data]);
     }
 
+    /**
+     * 删除巡检计划
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-26
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
     public function patrolPlanRemove(Request $request)
     {
         $company = self::checkCompany($request);
@@ -331,6 +341,157 @@ class OperationController extends Controller
         $data = $plan->remove($admin);
 
         return success(['data' => $data]);
+    }
+
+    /**
+     * 巡检人列表
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-25
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function examinerList(Request $request)
+    {
+        $company = self::checkCompany($request);
+
+        $pre_page = ($request->input('pre_page')?$request->input('pre_page'):10);
+
+        $data = Examiner::list($company, $pre_page);
+
+        return success(['data' => $data]);
+    }
+
+    /**
+     * 添加巡检人
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-25
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function examinerAdd(Request $request)
+    {
+        $company = self::checkCompany($request);
+        $admin = $admin = $request->admin;
+
+        if (!$relname = $request->input('relname')) 
+        {
+            return failure('请输入巡检人员名');
+        }
+
+        if (!$phone = $request->input('phone')) 
+        {
+            return failure('请输入巡检人员电话');
+        }
+
+        if (!$name = $request->input('name')) 
+        {
+            return failure('请输入巡检人员登陆名');
+        }
+
+        if (Examiner::where('company_id', $company->id)->where('name', $name)->first()) 
+        {
+            return failure('该用户名已存在');
+        }
+
+        if (!$password = $request->input('password')) 
+        {
+            return failure('请输入巡检人员密码');
+        }
+
+        if (!$station_id = $request->input('station_id')) 
+        {
+            return failure('请选择负责站点');
+        }
+
+        if (!$station = Station::where('company_id', $company->id)->where('id', $station_id)->first()) 
+        {
+            return failure('该站点不存在');
+        }
+
+        return DB::transaction(function() use($company, $admin, $station, $relname, $name, $password, $phone)
+        {
+            $data = Examiner::add($company, $admin, $station, $relname, $name, $password, $phone);
+
+            return success(['data' => $data]);
+        });
+    }
+
+    public function examinerEdit(Request $request)
+    {
+        $company = self::checkCompany($request);
+        $admin = $admin = $request->admin;
+
+        if (!$examiner_id = $request->input('examiner_id')) 
+        {
+            return failure('请选择巡检人员');
+        }
+
+        if (!$examiner = Examiner::where('id', $examiner_id)->first()) 
+        {
+            return failure('该巡检人员不存在');
+        }
+
+        if (!$relname = $request->input('relname')) 
+        {
+            return failure('请输入巡检人员名');
+        }
+
+        if (!$phone = $request->input('phone')) 
+        {
+            return failure('请输入巡检人员电话');
+        }
+
+        $password = '';
+        $password = $request->input('password');
+
+        if (!$station_id = $request->input('station_id')) 
+        {
+            return failure('请选择负责站点');
+        }
+
+        if (!$station = Station::where('company_id', $company->id)->where('id', $station_id)->first()) 
+        {
+            return failure('该站点不存在');
+        }
+
+        return DB::transaction(function() use($examiner, $admin, $station, $relname, $password, $phone)
+        {
+            $data = $examiner->edit($admin, $station, $relname, $password, $phone);
+
+            return success(['data' => $data]);
+        });
+    }
+
+    /**
+     * 删除巡检人员
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-25
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function examinerDelete(Request $request)
+    {
+        $company = self::checkCompany($request);
+
+        if (!$examiner_id = $request->input('examiner_id')) 
+        {
+            return failure('请选择巡检人员');
+        }
+
+        if (!$examiner = Examiner::where('id', $examiner_id)->first()) 
+        {
+            return failure('该巡检人员不存在');
+        }
+
+        return DB::transaction(function() use($examiner)
+        {
+            $data = $examiner->remove();
+
+            return success(['data' => $data]);
+        });
     }
 
     /**

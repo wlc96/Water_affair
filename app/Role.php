@@ -13,6 +13,43 @@ class Role extends Model
 {
     use Traits\BaseModel, SoftDeletes;
 
+    /**
+     * 角色列表
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-25
+     * @param    Company    $company  [description]
+     * @param    [type]     $pre_page [description]
+     * @return   [type]               [description]
+     */
+    public static function list(Company $company, $pre_page)
+    {
+        $roles = self::where('company_id', $company->id)->paginate($pre_page);
+
+        $roles = paginate_walk($roles, function($value, $key)
+        {
+            $directorys = RoleDirectoryBind::where('role_id', $value->id)->get();
+            $name = [];
+            foreach ($directorys as $directory) 
+            {
+                $name[] = $directory->directory->name;
+            }
+            $name = implode(',', $name);
+            $data = 
+            [
+                'id' => $value->id,
+                'name' => $value->name,
+                'directorys' => $name,
+                'explain' => $value->explain,
+                'created_at' => $value->created_at,
+            ];
+
+            return $data;
+        });
+
+        return $roles;
+    }
+
     /**添加角色
      * Please don't touch my code.
      * @Author   wulichuan
@@ -20,11 +57,12 @@ class Role extends Model
      * @param    Company    $company [description]
      * @param    [type]     $name    [description]
      */
-    public static function add(Company $company, $name)
+    public static function add(Company $company, $name, $explain)
     {
     	$data = 
     	[
-    		'company_id' => $company->id,
+            'company_id' => $company->id,
+    		'explain' => $explain,
     		'name' => $name,
     	];
 
@@ -40,9 +78,10 @@ class Role extends Model
      * @param    [type]     $directory_ids [description]
      * @return   [type]                    [description]
      */
-    public function edit($name, $directory_ids)
+    public function edit($name, $directory_ids, $explain)
     {
-    	$this->$name;
+        $this->name = $name;
+    	$this->explain = $explain;
 
     	$this->save();
 
@@ -91,6 +130,39 @@ class Role extends Model
     }
 
     /**
+     * 删除角色
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-25
+     * @return   [type]     [description]
+     */
+    public function remove()
+    {
+        $role_admin_binds = $this->getBindAdmin();
+        foreach ($role_admin_binds as $role_admin_bind) 
+        {
+            $role_admin_bind->delete();
+        }
+
+        $role_directory_binds = $this->getBindDirectory();
+        foreach ($role_directory_binds as $role_directory_bind) 
+        {
+            $role_directory_bind->delete();
+        }
+
+        $role_admin_directory_binds = $this->getBindAdminDirectory();
+
+        foreach ($role_admin_directory_binds as $role_admin_directory_bind) 
+        {
+            $role_admin_directory_bind->delete();
+        }
+
+        $this->delete();
+
+        return true;
+    }
+
+    /**
      * 角色绑定管理员
      * Please don't touch my code.
      * @Author   wulichuan
@@ -132,5 +204,17 @@ class Role extends Model
     public function getBindDirectory()
     {
     	return RoleDirectoryBind::where('company_id', $this->company_id)->where('role_id', $this->id)->get();
+    }
+
+    /**
+     * 获取角色对应权限
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-25
+     * @return   [type]     [description]
+     */
+     public function getBindAdminDirectory()
+    {
+        return RoleAdminDirectoryBind::where('company_id', $this->company_id)->where('role_id', $this->id)->get();
     }
 }

@@ -28,6 +28,9 @@ Route::middleware('ajax')->namespace('Api')->group(function()
 		{
 			//获取管理员信息接口
 			Route::post('info', 'AdminController@info');
+
+			//获取管理员权限接口
+			Route::post('power', 'AdminController@power');
 		});
 
 		//城市信息接口，待定
@@ -41,6 +44,21 @@ Route::middleware('ajax')->namespace('Api')->group(function()
 
 			//站点详细信息接口
 			Route::post('station-info', 'EquipmentController@stationInfo');
+
+			//站点信息修改接口
+			Route::post('stationEdit', 'EquipmentController@stationInfoEdit');
+
+			//站点阶梯水价信息接口
+			Route::post('station-infoX', 'EquipmentController@stationInfoX');
+
+			//站点阶梯水价调整接口
+			Route::post('waterPrice', 'EquipmentController@waterPricesEdit');
+
+			//设备列表接口
+			Route::post('eqList', 'EquipmentController@eqList');
+
+			//设备状态改变接口
+			Route::post('eqEdit', 'EquipmentController@eqStatusEdit');
 
 			//停水列表接口
 			Route::post('eqchange', 'EquipmentController@equipmentChange');
@@ -116,6 +134,18 @@ Route::middleware('ajax')->namespace('Api')->group(function()
 			//编辑巡检计划接口
 			Route::post('patrolPlan/delete', 'OperationController@patrolPlanRemove');
 
+			//巡检人列表接口
+			Route::post('examiner/list', 'OperationController@examinerList');
+
+			//添加巡检人接口
+			Route::post('examiner/add', 'OperationController@examinerAdd');
+
+			//编辑巡检人接口
+			Route::post('examiner/edit', 'OperationController@examinerEdit');
+
+			//编辑巡检人接口
+			Route::post('examiner/delete', 'OperationController@examinerDelete');
+
 		});
 
 		Route::prefix('system')->group(function()
@@ -123,17 +153,30 @@ Route::middleware('ajax')->namespace('Api')->group(function()
 			//目录列表接口
 			Route::post('directory/list', 'SystemController@directoryList');
 
+			//角色列表接口
+			Route::post('role/list', 'SystemController@roleList');
+
 			//增加角色接口
 			Route::post('role/add', 'SystemController@roleAdd');
-
-			//增加管理员接口
-			Route::post('admin/add', 'SystemController@adminAdd');
 
 			//编辑角色接口
 			Route::post('role/edit', 'SystemController@roleEdit');
 
-			//编辑角色接口
+			//删除角色接口
+			Route::post('role/delete', 'SystemController@roleDelete');
+
+			//增加管理员接口
+			Route::post('admin/add', 'SystemController@adminAdd');
+
+			//管理员列表接口
 			Route::post('admin/list', 'SystemController@adminList');
+
+			//编辑管理员接口
+			Route::post('admin/edit', 'SystemController@adminEdit');
+
+			//编辑管理员接口
+			Route::post('admin/delete', 'SystemController@adminDelete');
+
 		});
 	});
 });

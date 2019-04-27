@@ -74,7 +74,7 @@ class AdminController extends Controller
             return failure('密码不能为空');
         }
 
-        if(!$admin = Admin::where('name', $name)->first()) 
+        if(!$admin = Admin::where('name', $name)->where('status', 0)->first()) 
         {
             return failure('该用户名不存在');
         }
@@ -94,6 +94,22 @@ class AdminController extends Controller
         return success(['data' => ['access_token' => $access_token]]);
     }
 
+    /**
+     * 管理员权限
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-25
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function power(Request $request)
+    {
+        $admin = $request->admin;
+
+        $data = $admin->getDirectory();
+
+        return success(['data' => $data]);
+    }
     /**
      * 获取用户信息接口
      * Please don't touch my code.

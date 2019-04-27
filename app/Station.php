@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Company;
 use App\Equipment;
+use App\LadderWaterPrice;
 use Illuminate\Support\Str;
 class Station extends Model
 {
@@ -104,6 +106,52 @@ class Station extends Model
     	$this->fault_num = $this->eqNum(2,2);
 
     	$data = $this->only('name', 'linkman', 'phone', 'address', 'pic', 'business_hours', 'status', 'eq_sum', 'big_eq_sum', 'lit_eq_sum', 'open_num', 'close_num', 'Off_line_num', 'fault_num');
+    	return $data;
+    }
+
+    /**
+     * 编辑站点信息
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-24
+     * @param    [type]     $name           [description]
+     * @param    [type]     $address        [description]
+     * @param    [type]     $phone          [description]
+     * @param    [type]     $status         [description]
+     * @param    [type]     $path           [description]
+     * @param    [type]     $business_hours [description]
+     * @return   [type]                     [description]
+     */
+    public function edit($name, $address, $phone, $status, $path, $business_hours)
+    {
+    	if ($path) 
+    	{
+    		$this->pic = $path;
+    	}
+
+    	$this->name = $name;
+    	$this->address = $address;
+    	$this->phone = $phone;
+    	$this->status = $status;
+    	$this->business_hours = $business_hours;
+
+    	return $this->save();
+    }
+
+    /**
+     * 站点阶梯水价
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-24
+     * @return   [type]     [description]
+     */
+    public function xinfo()
+    {
+    	$water_price = LadderWaterPrice::where('company_id', $this->company->id)->where('station_id', $this->id)->first();
+    	// return $water_price;
+
+    	$data = $water_price->only('first_order', 'second_order', 'third_order');
+
     	return $data;
     }
 
