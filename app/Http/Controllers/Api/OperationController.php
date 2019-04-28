@@ -15,6 +15,7 @@ use App\User;
 use App\Examiner;
 use App\Station;
 use App\InspectionPlan;
+use App\Event;
 use DB;
 
 
@@ -151,6 +152,116 @@ class OperationController extends Controller
         $data = $order->edit($user, $servicing, $status, $explain);
 
         return success(['data' => $data]);
+    }
+
+    /**删除工单
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-27
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function orderDelete(Request $request)
+    {
+        $company = self::checkCompany($request);
+        if (!$order_id = $request->input('order_id')) 
+        {
+            return failure('请输入工单id');
+        }
+
+        if (!$order = Order::where('id', $order_id)->first()) 
+        {
+            return failure('该工单不存在');
+        }
+
+        return DB::transaction(function() use($order)
+        {
+            $data = $order->delete();
+
+            return success(['data' => $data]);
+        });
+    }
+
+    /**
+     * 事件列表
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-27
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function eventList(Request $request)
+    {
+        $company = self::checkCompany($request);
+        $number = ($request->input('number')?$request->input('number'):0);
+        $start = ($request->input('start')?$request->input('start'):'1990-01-01 00:00:00');
+        $end = ($request->input('end')?$request->input('end'):'2050-01-01 00:00:00');
+        $pre_page = ($request->input('pre_page')?$request->input('pre_page'):10);
+
+        $data = Event::list($company, $number, $start, $end, $pre_page);
+
+        return success(['data' => $data]);
+    }
+
+    /**
+     * 事件编辑
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-27
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function eventEdit(Request $request)
+    {
+        $company = self::checkCompany($request);
+        
+        if (!$event_id = $request->input('event_id')) 
+        {
+            return failure('请输入事件id');
+        }
+
+        if (!$event = Event::where('id', $event_id)->first()) 
+        {
+            return failure('该事件不存在');
+        }
+
+        if (!$status = $request->input('status')) 
+        {
+            return failure('请选择状态');
+        }
+
+        $data = $event->edit($status);
+
+        return success(['data' => $data]);
+    }
+
+    /**
+     * 删除事件
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-04-27
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function eventDelete(Request $request)
+    {
+        $company = self::checkCompany($request);
+        if (!$event_id = $request->input('event_id')) 
+        {
+            return failure('请输入事件id');
+        }
+
+        if (!$event = Event::where('id', $event_id)->first()) 
+        {
+            return failure('该事件不存在');
+        }
+
+        return DB::transaction(function() use($event)
+        {
+            $data = $event->delete();
+
+            return success(['data' => $data]);
+        });
     }
 
     /**

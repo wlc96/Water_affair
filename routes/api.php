@@ -116,11 +116,23 @@ Route::middleware('ajax')->namespace('Api')->group(function()
 			//故障编辑列表接口
 			Route::post('fault/edit', 'OperationController@faultEdit');
 
+			//事件列表接口
+			Route::post('event/list', 'OperationController@eventList');
+
+			//事件编辑接口
+			Route::post('event/edit', 'OperationController@eventEdit');
+
+			//事件删除接口
+			Route::post('event/delete', 'OperationController@eventDelete');
+
 			//工单处理列表接口
 			Route::post('order/list', 'OperationController@orderList');
 
 			//工单编辑列表接口
 			Route::post('order/edit', 'OperationController@orderEdit');
+
+			//工单编辑列表接口
+			Route::post('order/delete', 'OperationController@orderDelete');
 
 			//添加巡检计划接口
 			Route::post('patrolPlan/add', 'OperationController@patrolPlanAdd');
