@@ -188,7 +188,6 @@ class EquipmentController extends Controller
         return success(['data' => $data]);
     }
 
-
     /**
      * 站点阶梯水价
      * Please don't touch my code.
