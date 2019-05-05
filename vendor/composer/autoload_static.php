@@ -16,9 +16,9 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
-        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
+        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '6d394c3a532652dafb4dd296ba6a3f0b' => __DIR__ . '/../..' . '/app/Http/helpers.php',
     );
 
@@ -115,8 +115,13 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         array (
             'Cron\\' => 5,
         ),
+        'B' => 
+        array (
+            'Barryvdh\\Cors\\' => 14,
+        ),
         'A' => 
         array (
+            'Asm89\\Stack\\' => 12,
             'App\\' => 4,
         ),
     );
@@ -312,6 +317,14 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         array (
             0 => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron',
         ),
+        'Barryvdh\\Cors\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/barryvdh/laravel-cors/src',
+        ),
+        'Asm89\\Stack\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack',
+        ),
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
@@ -360,7 +373,6 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
 
     public static $classMap = array (
         'App\\Admin' => __DIR__ . '/../..' . '/app/Admin.php',
-        'App\\AdminDirectoryBind' => __DIR__ . '/../..' . '/app/AdminDirectoryBind.php',
         'App\\CashWithdrawals' => __DIR__ . '/../..' . '/app/CashWithdrawals.php',
         'App\\City' => __DIR__ . '/../..' . '/app/City.php',
         'App\\Company' => __DIR__ . '/../..' . '/app/Company.php',
@@ -377,6 +389,11 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         'App\\Examiner' => __DIR__ . '/../..' . '/app/Examiner.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Api\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/AdminController.php',
+        'App\\Http\\Controllers\\Api\\DistributionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/DistributionController.php',
+        'App\\Http\\Controllers\\Api\\EquipmentController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/EquipmentController.php',
+        'App\\Http\\Controllers\\Api\\ManagementController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ManagementController.php',
+        'App\\Http\\Controllers\\Api\\OperationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/OperationController.php',
+        'App\\Http\\Controllers\\Api\\SystemController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/SystemController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
@@ -393,8 +410,10 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         'App\\IconCompany' => __DIR__ . '/../..' . '/app/IconCompany.php',
         'App\\IconUser' => __DIR__ . '/../..' . '/app/IconUser.php',
         'App\\InspectionPlan' => __DIR__ . '/../..' . '/app/InspectionPlan.php',
+        'App\\Invoice' => __DIR__ . '/../..' . '/app/Invoice.php',
         'App\\LadderWaterPrice' => __DIR__ . '/../..' . '/app/LadderWaterPrice.php',
         'App\\OperatingLog' => __DIR__ . '/../..' . '/app/OperatiingLog.php',
+        'App\\Order' => __DIR__ . '/../..' . '/app/Order.php',
         'App\\PriceManagement' => __DIR__ . '/../..' . '/app/PriceManagement.php',
         'App\\Procedure' => __DIR__ . '/../..' . '/app/Procedure.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
@@ -403,6 +422,10 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Recharge' => __DIR__ . '/../..' . '/app/Recharge.php',
+        'App\\Role' => __DIR__ . '/../..' . '/app/Role.php',
+        'App\\RoleAdminBind' => __DIR__ . '/../..' . '/app/RoleAdminBind.php',
+        'App\\RoleAdminDirectoryBind' => __DIR__ . '/../..' . '/app/RoleAdminDirectoryBind.php',
+        'App\\RoleDirectoryBind' => __DIR__ . '/../..' . '/app/RoleDirectoryBind.php',
         'App\\Servicing' => __DIR__ . '/../..' . '/app/Servicing.php',
         'App\\Station' => __DIR__ . '/../..' . '/app/Station.php',
         'App\\Step' => __DIR__ . '/../..' . '/app/Step.php',
@@ -410,7 +433,13 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'App\\WorkOrder' => __DIR__ . '/../..' . '/app/WorkOrder.php',
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
+        'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/Cors.php',
+        'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/CorsService.php',
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
+        'Barryvdh\\Cors\\HandleCors' => __DIR__ . '/..' . '/barryvdh/laravel-cors/src/HandleCors.php',
+        'Barryvdh\\Cors\\HandlePreflight' => __DIR__ . '/..' . '/barryvdh/laravel-cors/src/HandlePreflight.php',
+        'Barryvdh\\Cors\\LumenServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-cors/src/LumenServiceProvider.php',
+        'Barryvdh\\Cors\\ServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-cors/src/ServiceProvider.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
         'Carbon\\CarbonInterval' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterval.php',
         'Carbon\\CarbonPeriod' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonPeriod.php',
@@ -3338,6 +3367,7 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         'Ramsey\\Uuid\\UuidFactory' => __DIR__ . '/..' . '/ramsey/uuid/src/UuidFactory.php',
         'Ramsey\\Uuid\\UuidFactoryInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/UuidFactoryInterface.php',
         'Ramsey\\Uuid\\UuidInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/UuidInterface.php',
+        'RechargesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/RechargesTableSeeder.php',
         'SebastianBergmann\\CodeCoverage\\CodeCoverage' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage.php',
         'SebastianBergmann\\CodeCoverage\\CoveredCodeNotExecutedException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/CoveredCodeNotExecutedException.php',
         'SebastianBergmann\\CodeCoverage\\Driver\\Driver' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Driver/Driver.php',
