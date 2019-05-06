@@ -330,9 +330,13 @@ class EquipmentController extends Controller
     {
     	$company = self::checkCompany($request);
 
-    	$now_time = Carbon::now()->startOfMonth();
-    	$time = ($request->input('time')?$request->input('time'):$now_time);
-
+    	$now_time = Carbon::now()->subMonth()->firstOfMonth();
+    	$time = $now_time;
+        if ($time = $request->input('time')) 
+        {
+            $time = Carbon::parse($time);
+        }
+        
     	$data = EqData::list($company, $time);
     	return success(['data' => $data]);
     }
