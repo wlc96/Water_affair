@@ -48,10 +48,10 @@ class Station extends Model
     		$num = $value->eqNum(0,0);
     		$big = $value->eqNum(1,1);
     		$lit = $value->eqNum(1,2);
-    		$open = $value->eqNum(1,1);
-    		$close = $value->eqNum(1,0);
-    		$fault = $value->eqNum(1,2);
-    		$Off_line = $value->eqNum(1,3);
+    		$open = $value->eqNum(2,1);
+    		$close = $value->eqNum(2,0);
+    		$fault = $value->eqNum(2,2);
+    		$Off_line = $value->eqNum(2,3);
     		$company->eq_sum = $company->eq_sum + $num;
     		$company->big_eq_sum = $company->big_eq_sum + $big;
     		$company->lit_eq_sum = $company->lit_eq_sum + $lit;
