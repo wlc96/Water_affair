@@ -92,7 +92,7 @@ class Admin extends Model
      */
     public static function list(Company $company, $pre_page)
     {
-        $admins = self::where('company_id', $company->id)->where('status', 0)->paginate($pre_page);
+        $admins = self::where('company_id', $company->id)->where('status', 0)->where('type', 0)->paginate($pre_page);
 
         $admins = paginate_walk($admins, function($value, $key)
         {

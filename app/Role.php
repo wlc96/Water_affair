@@ -38,6 +38,7 @@ class Role extends Model
             $data = 
             [
                 'id' => $value->id,
+                'type' => $value->type,
                 'name' => $value->name,
                 'directorys' => $name,
                 'explain' => $value->explain,
