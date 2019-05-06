@@ -90,9 +90,13 @@ class Admin extends Model
      * @param    [type]     $pre_page [description]
      * @return   [type]               [description]
      */
-    public static function list(Company $company, $pre_page)
+    public static function list(Company $company, $search, $pre_page)
     {
         $admins = self::where('company_id', $company->id)->where('status', 0)->where('type', 0)->paginate($pre_page);
+        if ($search) 
+        {
+            $admins = self::where('company_id', $company->id)->where('status', 0)->where('type', 0)->where('relname', 'like', '%'.$search.'%')->paginate($pre_page);
+        }
 
         $admins = paginate_walk($admins, function($value, $key)
         {
