@@ -106,7 +106,7 @@ class Station extends Model
      */
     public function info()
     {
-    	$this->eq_sum = $this->eqNum(0);
+    	$this->eq_sum = $this->eqNum(0,0);
     	$this->big_eq_sum = $this->eqNum(1,1);
     	$this->lit_eq_sum = $this->eqNum(1,2);
     	$this->open_num = $this->eqNum(2,1);
