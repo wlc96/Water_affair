@@ -45,7 +45,7 @@ class Station extends Model
 
     	foreach ($all_eq as $key => $value) 
     	{
-    		$num = $value->eqNum(0);
+    		$num = $value->eqNum(0,0);
     		$big = $value->eqNum(1,1);
     		$lit = $value->eqNum(1,2);
     		$open = $value->eqNum(1,1);
