@@ -31,8 +31,10 @@ class EquipmentController extends Controller
     public function myStationList(Request $request)
     {
     	$company = self::checkCompany($request);
+        $name = ($request->input('name')?$request->input('name'):'');
+        $pre_page = ($request->input('pre_page')?$request->input('pre_page'):10);
 
-    	$data = Station::myStaion($company);
+    	$data = Station::myStaion($company, $name, $pre_page);
 
     	return success(['data' => $data]);
     }
@@ -336,7 +338,7 @@ class EquipmentController extends Controller
         {
             $time = Carbon::parse($time);
         }
-        
+
     	$data = EqData::list($company, $time);
     	return success(['data' => $data]);
     }

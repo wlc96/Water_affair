@@ -22,7 +22,7 @@ class Station extends Model
      * @param    integer    $pre_page [description]
      * @return   [type]               [description]
      */
-    public static function myStaion(Company $company, $pre_page = 10)
+    public static function myStaion(Company $company, $name, $pre_page)
     {
     	$company->eq_sum = 0;
     	$company->big_eq_sum = 0;
@@ -33,6 +33,10 @@ class Station extends Model
     	$company->fault_num = 0;
 
     	$all_eq = self::where('company_id', $company->id)->get();
+        if ($name) 
+        {
+            $all_eq = self::where('company_id', $company->id)->where('name', 'like', '%'.$name.'%')->get();
+        }
 
     	if (!$all_eq) 
     	{
@@ -58,6 +62,11 @@ class Station extends Model
     	}
 
     	$stations = self::where('company_id', $company->id)->paginate($pre_page);
+
+        if ($name) 
+        {
+            $stations = self::where('company_id', $company->id)->where('name', 'like', '%'.$name.'%')->paginate($pre_page);
+        }
 
     	if (!$stations) 
     	{
