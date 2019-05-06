@@ -72,7 +72,7 @@ class Station extends Model
     	{
     		return [];
     	}
-    	
+
     	$stations = paginate_walk($stations, function($value, $key)
     	{
     		$open = count(Equipment::where('station_id', $value->id)->where('status', 1)->get());
@@ -174,7 +174,7 @@ class Station extends Model
      * @param    integer    $log  [description]
      * @return   [type]           [description]
      */
-    public function eqNum($type, $log = 0)
+    public function eqNum($type, $log)
     {
     	if($type == 0)
     	{
