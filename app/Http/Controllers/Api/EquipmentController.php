@@ -334,7 +334,7 @@ class EquipmentController extends Controller
 
     	$now_time = Carbon::now()->subMonth()->firstOfMonth();
     	$time = $now_time;
-        if ($time = $request->input('time')) 
+        if ($request->input('time')) 
         {
             $time = Carbon::parse($time);
         }
