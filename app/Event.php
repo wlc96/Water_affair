@@ -20,7 +20,7 @@ class Event extends Model
     	$orders = self::where('company_id', $company->id)->whereBetween('created_at', [$start, $end])->paginate($pre_page);
     	if ($number) 
     	{
-    		$orders = self::where('company_id', $company->id)->where('order_num', $number)->whereBetween('created_at', [$start, $end])->paginate($pre_page);
+    		$orders = self::where('company_id', $company->id)->where('number', $number)->whereBetween('created_at', [$start, $end])->paginate($pre_page);
     	}
 
     	$orders = paginate_walk($orders, function($value, $key)
