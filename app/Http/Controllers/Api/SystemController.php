@@ -49,7 +49,8 @@ class SystemController extends Controller
     {
         $company = self::checkCompany($request);
         $pre_page = ($request->input('pre_page')?$request->input('pre_page'):10);
-        $data = Role::list($company, $pre_page);
+        $search = ($request->input('search')?$request->input('search'):0);
+        $data = Role::list($company, $search, $pre_page);
 
         return success(['data' => $data]);
     }

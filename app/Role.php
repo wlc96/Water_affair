@@ -22,9 +22,13 @@ class Role extends Model
      * @param    [type]     $pre_page [description]
      * @return   [type]               [description]
      */
-    public static function list(Company $company, $pre_page)
+    public static function list(Company $company, $search, $pre_page)
     {
         $roles = self::where('company_id', $company->id)->paginate($pre_page);
+        if ($search) 
+        {
+            $roles = self::where('company_id', $company->id)->where('name', 'like', '%'.$search.'%')->paginate($pre_page);
+        }
 
         $roles = paginate_walk($roles, function($value, $key)
         {
