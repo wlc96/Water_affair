@@ -27,9 +27,9 @@ class EqChangesTablesSeeder extends Seeder
 	            $end_num = '';
 	            $move_time = '';
 	    		$f = mt_rand(1, 4);
-	    		if (($f == 1 )|| ($f == 4)) 
+	    		if (($f == 1 ) || ($f == 4)) 
 	    		{
-	    			$new_num = 'YMZH'.substr($a,5,10);
+	    			$new_num = 'YMZH'.substr($a,4,10);
 	    		}
 	    		elseif (($f == 2) || ($f == 3) || ($f == 4)) 
 	    		{
@@ -42,7 +42,7 @@ class EqChangesTablesSeeder extends Seeder
 	    		$order = DB::table('eq_changes')->insertGetId([
 		            'company_id' => 1,
 		            'status' => mt_rand(0,1),
-		            'type' => mt_rand(1,4),
+		            'type' => $f,
 		            'old_num' => 'YMZH'.substr($a,3,10),
 		            'new_num' => $new_num,
 		            'start_num' => 0,
