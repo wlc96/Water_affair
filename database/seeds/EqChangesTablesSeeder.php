@@ -31,7 +31,7 @@ class EqChangesTablesSeeder extends Seeder
 	    		{
 	    			$new_num = 'YMZH'.substr($a,4,10);
 	    		}
-	    		elseif (($f == 2) || ($f == 3) || ($f == 4)) 
+	    		if (($f == 2) || ($f == 3) || ($f == 4)) 
 	    		{
 	    			$end_num = mt_rand(1,3).mt_rand(0,9).mt_rand(0,9).'.'.mt_rand(0,9);
 	    			$move_time = Carbon::now()->toDateTimeString();
