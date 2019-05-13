@@ -20,9 +20,13 @@ class Recharge extends Model
      * @param    integer    $pre_page [description]
      * @return   [type]               [description]
      */
-    public static function companyList(Company $company, $pre_page = 10)
+    public static function companyList(Company $company, $number, $start, $end, $pre_page = 10)
     {
-    	$recharges = self::where('company_id', $company->id)->paginate($pre_page);
+    	$recharges = self::where('company_id', $company->id)->whereBetween('created_at', [$start, $end])->paginate($pre_page);
+        if ($number) 
+        {
+            $recharges = self::where('company_id', $company->id)->where('number', $number)->whereBetween('created_at', [$start, $end])->paginate($pre_page);
+        }
     	if (!$recharges) 
     	{
     		return [];
