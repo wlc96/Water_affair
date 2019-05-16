@@ -28,7 +28,7 @@ class Company extends Model
     	}
 
     	$num = 0.0000;
-        $total_num = 0
+        $total_num = 0;
     	foreach ($recharges as $key => $value) 
     	{
             $total_num = $total_num + 1;
