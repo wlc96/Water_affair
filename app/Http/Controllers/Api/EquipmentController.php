@@ -336,10 +336,8 @@ class EquipmentController extends Controller
     	$time = $now_time;
         if ($request->input('time')) 
         {
-            $time = Carbon::parse($time);
+            $time = Carbon::parse($request->input('time'));
         }
-
-        return $time;
 
     	$data = EqData::list($company, $time);
     	return success(['data' => $data]);
