@@ -44,7 +44,8 @@ class Company extends Model
     			$mon_num = $mon_num + $value->sum;
     		}
     	}
-    	$this->sum_money = $num;
+        $this->sum_money = $num;
+    	$this->account_balance = $num;
     	$this->mon_money = $mon_num;
     	$data = $this->only('account_balance', 'sum_money', 'mon_money');
     	return $data;
