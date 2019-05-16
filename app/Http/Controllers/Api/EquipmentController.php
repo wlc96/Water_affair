@@ -334,12 +334,13 @@ class EquipmentController extends Controller
 
     	$now_time = Carbon::now()->subMonth()->firstOfMonth();
     	$time = $now_time;
+        return $time;
         if ($request->input('time')) 
         {
             $time = Carbon::parse($time);
         }
 
-        return $time;
+
 
     	$data = EqData::list($company, $time);
     	return success(['data' => $data]);
