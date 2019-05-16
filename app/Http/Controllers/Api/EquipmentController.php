@@ -339,6 +339,8 @@ class EquipmentController extends Controller
             $time = Carbon::parse($time);
         }
 
+        return $time;
+
     	$data = EqData::list($company, $time);
     	return success(['data' => $data]);
     }
