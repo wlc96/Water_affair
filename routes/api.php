@@ -16,6 +16,7 @@ Route::middleware('ajax')->namespace('Api')->group(function()
 {
 	// //添加管理员接口，供自己时用
 	// Route::post('admin/add', 'AdminController@adminAdd');
+	Route::post('getSign', 'GetEquipmentController@Hmac');
 
 	//管理员登陆接口
 	Route::post('admin/login', 'AdminController@login');

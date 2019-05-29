@@ -25,7 +25,7 @@ class EqChangesTablesSeeder extends Seeder
 	            $new_num = '';
 	            $start_num = '';
 	            $end_num = '';
-	            $move_time = '';
+	            $move_time = Carbon::now()->toDateTimeString();
 	    		$f = mt_rand(1, 4);
 	    		if (($f == 1 ) || ($f == 4)) 
 	    		{

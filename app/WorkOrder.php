@@ -154,4 +154,38 @@ class WorkOrder extends Model
             return $data;
         });
     }
+
+    /**
+     * 小程序故障上报
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-05-27
+     * @param    User       $user      [description]
+     * @param    Equipment  $equipment [description]
+     * @param    [type]     $type      [description]
+     * @param    [type]     $explain   [description]
+     * @return   [type]                [description]
+     */
+    public static function wechatAdd(User $user, Equipment $equipment, $phone, $type, $explain)
+    {
+        $company = $equipment->station->company;
+        $station = $equipment->station;
+
+        $str = '12836158129381723457812659103900129374518584912';
+
+        $data = 
+        [
+            'company_id' => $company->id,
+            'number' => 'YMZH'.substr(str_shuffle($str),4,16),
+            'user_id' => $user->id,
+            'station_id' => $station->id,
+            'link_phone' => $phone,
+            'equipment_id' => $equipment->id,
+            'type' => $type,
+            'explain' => $explain,
+            'servicing_id' => mt_rand(1,2),
+        ];
+
+        return self::saveData($data);
+    }
 }
