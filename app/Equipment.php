@@ -106,7 +106,14 @@ class Equipment extends Model
         }
 
         $days = count(WaterDatas::where('equipment_id', $this->id)->whereBetween('created_at', [$start_year, $end_year])->get());
-        $day_water = $year_water/$days;
+        if ($year_water) 
+        {
+            $day_water = $year_water/$days;
+        }
+        else
+        {
+            $day_water = 0;
+        }
 
         $start_month = Carbon::now()->startOfMonth();
         $end_month = Carbon::now()->endOfMonth();
