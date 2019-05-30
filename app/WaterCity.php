@@ -40,7 +40,7 @@ class WaterCity extends Model
     			{
     				foreach ($companys as $company) 
     				{
-    					$companyc[] = $company->name;
+    					$companyc[] = $company->only('id', 'name');
     				}
     			}
     			$hot[] = 
@@ -62,7 +62,7 @@ class WaterCity extends Model
     			{
     				foreach ($companys as $company) 
     				{
-    					$companyc[] = $company->name;
+    					$companyc[] = $company->only('id', 'name');
     				}
     			}
     			$cityc[] = 
