@@ -109,6 +109,20 @@ class UserController extends Controller
     }
 
     /**
+     * 用户信息
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-05-30
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function info(Request $request)
+    {
+        $user = $request->user;
+
+        return success(['data' => $user]);
+    }
+    /**
      * 修改个人信息
      * Please don't touch my code.
      * @Author   wulichuan

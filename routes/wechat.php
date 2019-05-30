@@ -25,6 +25,9 @@ Route::middleware('ajax')->namespace('WeChat')->group(function()
 		//用户登陆接口
 		Route::post('user/update', 'UserController@updateInfo');
 
+		//用户登陆接口
+		Route::post('user/info', 'UserController@info');
+
 		//设备接口组
 		Route::prefix('equipment')->group(function()
 		{
@@ -56,6 +59,20 @@ Route::middleware('ajax')->namespace('WeChat')->group(function()
 		{
 			//获取管理员信息接口
 			Route::post('add', 'InvoiceController@addInvoice');
+
+		});
+
+		//支付接口组
+		Route::prefix('pay')->group(function()
+		{
+			//城市信息接口
+			Route::post('citys', 'PayController@waterCityList');
+
+			//绑定水表接口
+			Route::post('band_eq', 'PayController@bindEquipment');
+
+			//绑定水表接口
+			Route::post('group', 'PayController@groupList');
 
 		});
 	});
