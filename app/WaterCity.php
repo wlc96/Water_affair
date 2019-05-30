@@ -20,35 +20,35 @@ class WaterCity extends Model
     	$initials = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
     	$data = [];
+    	$hot = [];
+		$city_hots = self::where('hot', 1)->get();
+		foreach ($city_hots as $city_hot) 
+		{
+			$companys = WaterCompany::where('water_city_id', $city_hot->id)->get();
+
+			$companyc = [];
+			if (!$companys) 
+			{
+				$company[] = [];
+			}
+			else
+			{
+				foreach ($companys as $company) 
+				{
+					$companyc[] = $company->only('id', 'name');
+				}
+			}
+			$hot[] = 
+			[
+				'name' => $city_hot->name,
+				'companys' => $companyc,
+			];
+		}
     	foreach ($initials as $initial)
     	{
     		$citys = self::where('initials', $initial)->get();
 
     		$cityc = [];
-    		$hot = [];
-    		$city_hots = self::where('hot', 1)->get();
-    		foreach ($city_hots as $city_hot) 
-    		{
-    			$companys = WaterCompany::where('water_city_id', $city_hot->id)->get();
-
-    			$companyc = [];
-    			if (!$companys) 
-    			{
-    				$company[] = [];
-    			}
-    			else
-    			{
-    				foreach ($companys as $company) 
-    				{
-    					$companyc[] = $company->only('id', 'name');
-    				}
-    			}
-    			$hot[] = 
-    			[
-    				'name' => $city_hot->name,
-    				'companys' => $companyc,
-    			];
-    		}
     		foreach ($citys as $city) 
     		{
     			$companys = WaterCompany::where('water_city_id', $city->id)->get();
@@ -73,12 +73,16 @@ class WaterCity extends Model
     		}
     		$data[] = 
     		[
-    			'hot' => $hot,
     			'initial' => $initial,
     			'citys' => $cityc,
     		];
     	}
+    	$re_data = 
+    	[
+    		'hot' => $hot,
+    		'data' => $data,
+    	];
 
-    	return $data;
+    	return $re_data;
     }
 }
