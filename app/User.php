@@ -64,7 +64,7 @@ class User extends Model
             {
                 $year_water_end = $year_water_end->all_num;
             }
-            $year_water_start = WaterDatas::where('equipment_id', $eq->equipment_id)->whereBetween('created_at', [$start_year, $end_year])->orderBy('created_at')->first()->all_num;
+            $year_water_start = WaterDatas::where('equipment_id', $eq->equipment_id)->whereBetween('created_at', [$start_year, $end_year])->orderBy('created_at')->first();
             if ($year_water_start) 
             {
                 $year_water_start = $year_water_start->all_num;
