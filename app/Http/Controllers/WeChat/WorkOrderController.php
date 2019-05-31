@@ -38,7 +38,7 @@ class WorkOrderController extends Controller
     		return failure('请选择类型');
     	}
 
-    	if (($type != 1) && ($type != 2)) 
+    	if (($type < 1) || ($type > 5)) 
     	{
     		return failure('类型输入有误，请重新输入');
     	}
