@@ -28,6 +28,9 @@ Route::middleware('ajax')->namespace('WeChat')->group(function()
 		//用户登陆接口
 		Route::post('user/info', 'UserController@info');
 
+		//城市联动接口
+		Route::post('citys', 'InvoiceController@citys');
+
 		//设备接口组
 		Route::prefix('equipment')->group(function()
 		{

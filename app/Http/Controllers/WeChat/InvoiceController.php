@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\UserInvoice;
 use App\Recharge;
+use App\City;
 use DB;
 
 class InvoiceController extends Controller
@@ -93,5 +94,28 @@ class InvoiceController extends Controller
     		return success(['data' => $data]);
     	});
 
+    }
+
+    /**
+     * 城市联动列表
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-05-31
+     * @param    Recharge   $request [description]
+     * @return   [type]              [description]
+     */
+    public function citys(Request $request)
+    {
+    	$city_id = 0;
+
+
+    	if ($request->input('city_id')) 
+    	{
+    		$city_id = $request->input('city_id');
+    	}
+
+    	$data = City::lianList($city_id);
+
+    	return success($data);
     }
 }

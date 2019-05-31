@@ -14,6 +14,14 @@ class City extends Model
 {
     use Traits\BaseModel;
 
+    /**
+     * 城市树
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-05-31
+     * @param    Company    $company [description]
+     * @return   [type]              [description]
+     */
     public static function myCityTree(Company $company)
     {
         $stations = Station::where('company_id', $company->id)->get();
@@ -96,42 +104,55 @@ class City extends Model
         return $data;
     } 
 
-    public static function cityTree()
+  //   public static function cityTree()
+  //   {
+  //   	$tree = self::where('pid', 0)->get();
+
+  //   	//return $tree;
+  //   	$data  = self::allChild($tree,3);
+
+  //   	return $data;
+  //   }
+
+  //   public static function allChild($tree, $deep)
+  //   {
+  //   	if($deep<=0)
+  //   	{
+  //   		return [];
+  //   	}
+
+  //   	$children = [];
+
+  //   	foreach ($tree as $key => $value) 
+  //   	{
+		// 	$v = self::where('pid', $value->id)->get();
+		// 	// if (count($v)) 
+		// 	// {
+		// 		$value->children = self::allChild($v, $deep-1);
+		// 		$children[] = $value->only('id', 'name', 'lng', 'lat', 'children');
+		// 	//}
+  //   	}
+
+  //   	foreach ($children as $key => $value) 
+		// {
+		// 	if ($value['children'] == null) 
+		// 	{
+		// 		unset($value['children']);
+		// 	}
+		// }
+		// return $children;
+  //   }
+
+    public static function lianList($city_id)
     {
-    	$tree = self::where('pid', 0)->get();
+        $data = [];
+        $citys = self::where('pid', $city_id)->get();
 
-    	//return $tree;
-    	$data  = self::allChild($tree,3);
+        foreach ($citys as $city) 
+        {
+            $data[] = $city->only('id', 'name');
+        }
 
-    	return $data;
-    }
-
-    public static function allChild($tree, $deep)
-    {
-    	if($deep<=0)
-    	{
-    		return [];
-    	}
-
-    	$children = [];
-
-    	foreach ($tree as $key => $value) 
-    	{
-			$v = self::where('pid', $value->id)->get();
-			// if (count($v)) 
-			// {
-				$value->children = self::allChild($v, $deep-1);
-				$children[] = $value->only('id', 'name', 'lng', 'lat', 'children');
-			//}
-    	}
-
-    	foreach ($children as $key => $value) 
-		{
-			if ($value['children'] == null) 
-			{
-				unset($value['children']);
-			}
-		}
-		return $children;
+        return $data;
     }
 }
