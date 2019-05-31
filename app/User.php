@@ -76,6 +76,8 @@ class User extends Model
                 'year_water' => $year_water,
                 'surplus_water' => $eq->equipment->surplus_water,
                 'surplus_money' => $eq->equipment->surplus_money,
+                'hu_name' => $eq->hu_name,
+                'hu_name' => $eq->user_group->name,
             ];
         }
 
