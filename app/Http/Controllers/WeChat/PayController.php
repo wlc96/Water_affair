@@ -8,6 +8,7 @@ use App\WaterCity;
 use App\WaterCompany;
 use App\UserGroup;
 use App\Equipment;
+use App\Recharge;
 use App\UserEquipmentBind;
 use function EasyWeChat\Kernel\Support\generate_sign;
 use DB;
@@ -192,60 +193,35 @@ class PayController extends Controller
     	return success(['data' => $datas]);
     }
 
-
-    //  public function notify(Request $request)
-    // {
-    //     $notify = $this->getNotify();
- 
-    //     $options = [
-    //         'app_id' => $notify->appid,
-    //         'mch_id' => Config.get(pay.mch_id),
-    //         'key' => Config.get(pay.mch_key),
-    //         'notify_url' => 'https://example.com/notify'
-    //     ];
- 
-    //     $payment = Factory::payment($options);
- 
-    //     $response = $payment->handlePaidNotify(function ($message, $fail)
-    //     {
-    //         // 根据返回的订单号查询订单数据
-    //         $order = $this->order->findBy('order_num', $message['out_trade_no']);
-            
-    //         if (!$order) {
-    //             $fail('Order not exist.');
-    //         }
-            
-    //         if ($order->pay_status  == '已支付') {
-    //             return true;
-    //         }
-            
-    //         // 支付成功后的业务逻辑
-    //         if($message['result_code'] === 'SUCCESS')
-    //         {
-    //             ……
- 
-    //         }
-            
-    //         return true;
-    //     });
- 
-    //     return $response;
-    // }
- 
-    // private function getNotify(Request $request = null)
-    // {
-    //     $request = Request::createFromGlobals();
-    
-    //     try {
-    //         $xml = XML::parse(strval($request->getContent()));
-    //     } catch (\Throwable $e) {
-    //         throw new Exception('Invalid request XML: ' . $e->getMessage(), 400);
-    //     }
-    
-    //     if (!is_array($xml) || empty($xml)) {
-    //         throw new Exception('Invalid request XML.', 400);
-    //     }
- 
-    //     return new Collection($xml);
-    // }
+    /**
+     * 微信回调
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-06-05
+     * @return   [type]     [description]
+     */
+    public function wechatNotify()
+    {
+        $response = $this->wxpay->handlePaidNotify(function ($message, $fail) {
+            // 使用通知里的 "微信支付订单号" 或者 "商户订单号" 去自己的数据库找到订单
+            $order = Recharge::where('order_no', $message['out_trade_no'])->first();
+            //订单不存在或者订单已支付
+            if ($order) {
+                return true;
+            }
+            if ($message['return_code'] === 'SUCCESS') { // return_code 表示通信状态，不代表支付状态
+                if (array_get($message, 'result_code') === 'SUCCESS') { // 用户是否支付成功
+                    $order->status = 1; // 更新支付时间为当前时间
+                    $order->transaction_id = $message['transaction_id'];  //微信交易号
+                } elseif (array_get($message, 'result_code') === 'FAIL') {  // 用户支付失败
+                    $order->status = 0; //支付状态 失败
+                }
+            } else {
+                return $fail('通信失败，请稍后再通知我');
+            }
+            // $order->save(); // 保存订单
+            return true; // 返回处理完成
+        });
+        return response()->json(['code' => 1, 'msg' => '订单支付成功!', 'data' => $response]);
+    }
 }

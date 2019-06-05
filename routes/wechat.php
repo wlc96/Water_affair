@@ -71,6 +71,8 @@ Route::middleware('ajax')->namespace('WeChat')->group(function()
 			//城市信息接口
 			Route::post('pay', 'PayController@pay');
 
+			Route::any('callback', 'PayController@wechatNotify');
+
 			//城市信息接口
 			Route::post('citys', 'PayController@waterCityList');
 
