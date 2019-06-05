@@ -69,6 +69,9 @@ Route::middleware('ajax')->namespace('WeChat')->group(function()
 		Route::prefix('pay')->group(function()
 		{
 			//城市信息接口
+			Route::post('pay', 'PayController@pay');
+
+			//城市信息接口
 			Route::post('citys', 'PayController@waterCityList');
 
 			//绑定水表接口

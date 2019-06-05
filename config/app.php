@@ -177,6 +177,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Mrgoon\AliSms\ServiceProvider::class,
+        Overtrue\LaravelWeChat\ServiceProvider::class,
 
     ],
 
@@ -227,6 +228,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'AliSms'=>Mrgoon\AliSms\ServiceProvider::class,
+        'EasyWeChat' => Overtrue\LaravelWeChat\Facade::class,
 
     ],
 
