@@ -6,6 +6,3 @@ msgstr ""
 
 msgid "foo"
 msgstr "bar"
-
-msgid "bar"
-msgstr "foo"
