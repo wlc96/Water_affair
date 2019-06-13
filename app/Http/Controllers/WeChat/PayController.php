@@ -104,6 +104,8 @@ class PayController extends Controller
      */
     private function payALi(Request $request)
     {
+        $code = $request->input('code');
+        $money = $request->input('money');
         require_once "../app/libs/alipay/aop/AopClient.php";
         require_once "../app/libs/alipay/aop/request/AlipaySystemOauthTokenRequest.php";
         require_once "../app/libs/alipay/aop/request/AlipayTradeCreateRequest.php";
@@ -118,21 +120,21 @@ class PayController extends Controller
         $aop->signType = 'RSA2';
         $aop->postCharset='utf-8';
         $aop->format='json';
-        // $request = new AlipaySystemOauthTokenRequest();
-        // $request->setGrantType("authorization_code");
-        // $request->setCode("7012fafc15ce40f1b4b79f502ca3TC78");
-        // $result = $aop->execute($request);
-        // // return $result;
-        // $responseNode = str_replace(".", "_", $request->getApiMethodName()) . "_response";
-        // $resultId = $result->$responseNode->user_id;
+        $request = new AlipaySystemOauthTokenRequest();
+        $request->setGrantType("authorization_code");
+        $request->setCode($code);
+        $result = $aop->execute($request);
+        // return $result;
+        $responseNode = str_replace(".", "_", $request->getApiMethodName()) . "_response";
+        $resultId = $result->$responseNode->user_id;
         // return $resultId;
         $request = new AlipayTradeCreateRequest();
         $request->setBizContent("{" .
-        "\"out_trade_no\":\"20150320010101001\",".
-        "\"total_amount\":20,".
-        "\"subject\":\"Iphone616G\",".
+        "\"out_trade_no\":\"2088712388095786\",".
+        "\"total_amount\":".$money.",".
+        "\"subject\":\"个人水费充值\",".
         "\"body\":\"个人水费充值\",".
-        "\"buyer_id\":\"2088712388095786\"".
+        "\"buyer_id\":\"".$resultId."\"".
         "}");
         $result = $aop->execute ( $request); 
         return $result;
