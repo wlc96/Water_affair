@@ -106,6 +106,10 @@ class PayController extends Controller
     {
         $code = $request->input('code');
         $money = $request->input('money');
+        $str = '26351824092183721983701293801924720640218730219730101928301724546';
+
+        $this_time = Carbon::now()->toDateTimeString();
+        $num = 'YMZH'.$this_time.substr(str_shuffle($str),3,10);
         require_once "../app/libs/alipay/aop/AopClient.php";
         require_once "../app/libs/alipay/aop/request/AlipaySystemOauthTokenRequest.php";
         require_once "../app/libs/alipay/aop/request/AlipayTradeCreateRequest.php";
@@ -130,7 +134,7 @@ class PayController extends Controller
         // return $resultId;
         $request = new AlipayTradeCreateRequest();
         $request->setBizContent("{" .
-        "\"out_trade_no\":\"2088712388095786\",".
+        "\"out_trade_no\":\"".$num."\",".
         "\"total_amount\":".$money.",".
         "\"subject\":\"个人水费充值\",".
         "\"body\":\"个人水费充值\",".
