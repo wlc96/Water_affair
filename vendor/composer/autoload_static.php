@@ -10,22 +10,22 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '023d27dca8066ef29e6739335ea73bad' => __DIR__ . '/..' . '/symfony/polyfill-php70/bootstrap.php',
-        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
-        '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
+        '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '32dcc8afd4335739640db7d200c1971d' => __DIR__ . '/..' . '/symfony/polyfill-apcu/bootstrap.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
-        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         'f0e7e63bbb278a92db02393536748c5f' => __DIR__ . '/..' . '/overtrue/wechat/src/Kernel/Support/Helpers.php',
         '6747f579ad6817f318cc3a7e7a0abb93' => __DIR__ . '/..' . '/overtrue/wechat/src/Kernel/Helpers.php',
+        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '6d394c3a532652dafb4dd296ba6a3f0b' => __DIR__ . '/../..' . '/app/Http/helpers.php',
     );
 
@@ -95,6 +95,7 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         'O' => 
         array (
             'Overtrue\\Socialite\\' => 19,
+            'Overtrue\\LaravelWeChat\\' => 23,
         ),
         'M' => 
         array (
@@ -117,6 +118,10 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         array (
             'Illuminate\\' => 11,
         ),
+        'H' => 
+        array (
+            'Hyperbolaa\\Alipay\\' => 18,
+        ),
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
@@ -138,6 +143,7 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         array (
             'Dotenv\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
+            'Doctrine\\Common\\Lexer\\' => 22,
             'Doctrine\\Common\\Inflector\\' => 26,
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\Annotations\\' => 28,
@@ -318,6 +324,10 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         array (
             0 => __DIR__ . '/..' . '/overtrue/socialite/src',
         ),
+        'Overtrue\\LaravelWeChat\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/overtrue/laravel-wechat/src',
+        ),
         'Mrgoon\\Dysmsapi\\Request\\V20170525\\' => 
         array (
             0 => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/Dysmsapi/Request/V20170525',
@@ -353,6 +363,10 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         'Illuminate\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate',
+        ),
+        'Hyperbolaa\\Alipay\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hyperbolaa/alipay/src/Hyperbolaa/Alipay',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -393,6 +407,10 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         'Doctrine\\Instantiator\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
+        ),
+        'Doctrine\\Common\\Lexer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/lexer/lib/Doctrine/Common/Lexer',
         ),
         'Doctrine\\Common\\Inflector\\' => 
         array (
@@ -437,6 +455,13 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
     );
 
     public static $prefixesPsr0 = array (
+        'U' => 
+        array (
+            'UpdateHelper\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/kylekatarnls/update-helper/src',
+            ),
+        ),
         'P' => 
         array (
             'Prophecy\\' => 
@@ -464,10 +489,6 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
             'Doctrine\\DBAL\\' => 
             array (
                 0 => __DIR__ . '/..' . '/doctrine/dbal/lib',
-            ),
-            'Doctrine\\Common\\Lexer\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/doctrine/lexer/lib',
             ),
             'Doctrine\\Common\\Collections\\' => 
             array (
@@ -692,6 +713,7 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         'Carbon\\Exceptions\\InvalidDateException' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Exceptions/InvalidDateException.php',
         'Carbon\\Laravel\\ServiceProvider' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Laravel/ServiceProvider.php',
         'Carbon\\Translator' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Translator.php',
+        'Carbon\\Upgrade' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Upgrade.php',
         'ChaoSeeder' => __DIR__ . '/../..' . '/database/seeds/ChaoSeeder.php',
         'CityTableSeeder' => __DIR__ . '/../..' . '/database/seeds/CityTableSeeder.php',
         'ComposerAutoloaderInitc1da825ff03776352b657ca87192fe32' => __DIR__ . '/../..' . '/app/libs/msg_sdk/vendor/composer/autoload_real.php',
@@ -1409,12 +1431,12 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         'Egulias\\EmailValidator\\Exception\\DomainHyphened' => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator/Exception/DomainHyphened.php',
         'Egulias\\EmailValidator\\Exception\\DotAtEnd' => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator/Exception/DotAtEnd.php',
         'Egulias\\EmailValidator\\Exception\\DotAtStart' => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator/Exception/DotAtStart.php',
-        'Egulias\\EmailValidator\\Exception\\ExpectedQPair' => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator/Exception/ExpectingQPair.php',
         'Egulias\\EmailValidator\\Exception\\ExpectingAT' => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator/Exception/ExpectingAT.php',
         'Egulias\\EmailValidator\\Exception\\ExpectingATEXT' => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator/Exception/ExpectingATEXT.php',
         'Egulias\\EmailValidator\\Exception\\ExpectingCTEXT' => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator/Exception/ExpectingCTEXT.php',
         'Egulias\\EmailValidator\\Exception\\ExpectingDTEXT' => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator/Exception/ExpectingDTEXT.php',
         'Egulias\\EmailValidator\\Exception\\ExpectingDomainLiteralClose' => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator/Exception/ExpectingDomainLiteralClose.php',
+        'Egulias\\EmailValidator\\Exception\\ExpectingQPair' => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator/Exception/ExpectingQPair.php',
         'Egulias\\EmailValidator\\Exception\\InvalidEmail' => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator/Exception/InvalidEmail.php',
         'Egulias\\EmailValidator\\Exception\\NoDNSRecord' => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator/Exception/NoDNSRecord.php',
         'Egulias\\EmailValidator\\Exception\\NoDomainPart' => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator/Exception/NoDomainPart.php',
@@ -2050,6 +2072,12 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         'Hamcrest\\Type\\IsString' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Type/IsString.php',
         'Hamcrest\\Util' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
         'Hamcrest\\Xml\\HasXPath' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
+        'Hyperbolaa\\Alipay\\AlipayServiceProvider' => __DIR__ . '/..' . '/hyperbolaa/alipay/src/Hyperbolaa/Alipay/AlipayServiceProvider.php',
+        'Hyperbolaa\\Alipay\\Facades\\AlipayMobile' => __DIR__ . '/..' . '/hyperbolaa/alipay/src/Hyperbolaa/Alipay/Facades/AlipayMobile.php',
+        'Hyperbolaa\\Alipay\\Facades\\AlipayWeb' => __DIR__ . '/..' . '/hyperbolaa/alipay/src/Hyperbolaa/Alipay/Facades/AlipayWeb.php',
+        'Hyperbolaa\\Alipay\\Mobile\\SdkPayment' => __DIR__ . '/..' . '/hyperbolaa/alipay/src/Hyperbolaa/Alipay/Mobile/SdkPayment.php',
+        'Hyperbolaa\\Alipay\\Wap\\SdkPayment' => __DIR__ . '/..' . '/hyperbolaa/alipay/src/Hyperbolaa/Alipay/Wap/SdkPayment.php',
+        'Hyperbolaa\\Alipay\\Web\\SdkPayment' => __DIR__ . '/..' . '/hyperbolaa/alipay/src/Hyperbolaa/Alipay/Web/SdkPayment.php',
         'Illuminate\\Auth\\Access\\AuthorizationException' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Auth/Access/AuthorizationException.php',
         'Illuminate\\Auth\\Access\\Gate' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Auth/Access/Gate.php',
         'Illuminate\\Auth\\Access\\HandlesAuthorization' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Auth/Access/HandlesAuthorization.php',
@@ -3081,6 +3109,18 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         'Mrgoon\\AliyunSmsSdk\\RpcAcsRequest' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/aliyun-php-sdk-core/RpcAcsRequest.php',
         'Mrgoon\\Dysmsapi\\Request\\V20170525\\QuerySendDetailsRequest' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/Dysmsapi/Request/V20170525/QuerySendDetailsRequest.php',
         'Mrgoon\\Dysmsapi\\Request\\V20170525\\SendSmsRequest' => __DIR__ . '/..' . '/mrgoon/aliyun-sms-sdk/Dysmsapi/Request/V20170525/SendSmsRequest.php',
+        'Overtrue\\LaravelWeChat\\CacheBridge' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/CacheBridge.php',
+        'Overtrue\\LaravelWeChat\\Controllers\\Controller' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Controllers/Controller.php',
+        'Overtrue\\LaravelWeChat\\Controllers\\OpenPlatformController' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Controllers/OpenPlatformController.php',
+        'Overtrue\\LaravelWeChat\\Events\\OpenPlatform\\Authorized' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Events/OpenPlatform/Authorized.php',
+        'Overtrue\\LaravelWeChat\\Events\\OpenPlatform\\OpenPlatformEvent' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Events/OpenPlatform/OpenPlatformEvent.php',
+        'Overtrue\\LaravelWeChat\\Events\\OpenPlatform\\Unauthorized' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Events/OpenPlatform/Unauthorized.php',
+        'Overtrue\\LaravelWeChat\\Events\\OpenPlatform\\UpdateAuthorized' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Events/OpenPlatform/UpdateAuthorized.php',
+        'Overtrue\\LaravelWeChat\\Events\\OpenPlatform\\VerifyTicketRefreshed' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Events/OpenPlatform/VerifyTicketRefreshed.php',
+        'Overtrue\\LaravelWeChat\\Events\\WeChatUserAuthorized' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Events/WeChatUserAuthorized.php',
+        'Overtrue\\LaravelWeChat\\Facade' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Facade.php',
+        'Overtrue\\LaravelWeChat\\Middleware\\OAuthAuthenticate' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/Middleware/OAuthAuthenticate.php',
+        'Overtrue\\LaravelWeChat\\ServiceProvider' => __DIR__ . '/..' . '/overtrue/laravel-wechat/src/ServiceProvider.php',
         'Overtrue\\Socialite\\AccessToken' => __DIR__ . '/..' . '/overtrue/socialite/src/AccessToken.php',
         'Overtrue\\Socialite\\AccessTokenInterface' => __DIR__ . '/..' . '/overtrue/socialite/src/AccessTokenInterface.php',
         'Overtrue\\Socialite\\AuthorizeFailedException' => __DIR__ . '/..' . '/overtrue/socialite/src/AuthorizeFailedException.php',
@@ -3577,6 +3617,9 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         'PhpParser\\JsonDecoder' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/JsonDecoder.php',
         'PhpParser\\Lexer' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Lexer.php',
         'PhpParser\\Lexer\\Emulative' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Lexer/Emulative.php',
+        'PhpParser\\Lexer\\TokenEmulator\\CoaleseEqualTokenEmulator' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Lexer/TokenEmulator/CoaleseEqualTokenEmulator.php',
+        'PhpParser\\Lexer\\TokenEmulator\\FnTokenEmulator' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Lexer/TokenEmulator/FnTokenEmulator.php',
+        'PhpParser\\Lexer\\TokenEmulator\\TokenEmulatorInterface' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Lexer/TokenEmulator/TokenEmulatorInterface.php',
         'PhpParser\\NameContext' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/NameContext.php',
         'PhpParser\\Node' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node.php',
         'PhpParser\\NodeAbstract' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/NodeAbstract.php',
@@ -3596,6 +3639,7 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         'PhpParser\\Node\\Expr\\ArrayDimFetch' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/Expr/ArrayDimFetch.php',
         'PhpParser\\Node\\Expr\\ArrayItem' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/Expr/ArrayItem.php',
         'PhpParser\\Node\\Expr\\Array_' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/Expr/Array_.php',
+        'PhpParser\\Node\\Expr\\ArrowFunction' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/Expr/ArrowFunction.php',
         'PhpParser\\Node\\Expr\\Assign' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/Expr/Assign.php',
         'PhpParser\\Node\\Expr\\AssignOp' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/Expr/AssignOp.php',
         'PhpParser\\Node\\Expr\\AssignOp\\BitwiseAnd' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/Expr/AssignOp/BitwiseAnd.php',
@@ -4824,6 +4868,9 @@ class ComposerStaticInita8555dd145e39e608c9e349cba70ede2
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Processor.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Rule' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Rule.php',
         'TypeError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/TypeError.php',
+        'UpdateHelper\\ComposerPlugin' => __DIR__ . '/..' . '/kylekatarnls/update-helper/src/UpdateHelper/ComposerPlugin.php',
+        'UpdateHelper\\UpdateHelper' => __DIR__ . '/..' . '/kylekatarnls/update-helper/src/UpdateHelper/UpdateHelper.php',
+        'UpdateHelper\\UpdateHelperInterface' => __DIR__ . '/..' . '/kylekatarnls/update-helper/src/UpdateHelper/UpdateHelperInterface.php',
         'UserEquipmentSeeder' => __DIR__ . '/../..' . '/database/seeds/UserEquipmentSeeder.php',
         'UsersTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UsersTableSeeder.php',
         'WaterCitySeeder' => __DIR__ . '/../..' . '/database/seeds/WaterCitySeeder.php',

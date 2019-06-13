@@ -12,6 +12,9 @@ use App\Recharge;
 use App\UserEquipmentBind;
 use function EasyWeChat\Kernel\Support\generate_sign;
 use DB;
+use AopClient;
+use AlipaySystemOauthTokenRequest;
+use AlipayTradeCreateRequest;
 
 class PayController extends Controller
 {
@@ -33,11 +36,11 @@ class PayController extends Controller
 
         if ($type == 1 ) 
         {
-            $data = $this->payWeChat();
+            $data = $this->payWeChat($request);
         }
         elseif ($type == 2) 
         {
-            $data = $this->payALi();
+            $data = $this->payALi($request);
         }
         else
         {
@@ -54,42 +57,38 @@ class PayController extends Controller
      * @DateTime 2019-06-03
      * @return   [type]     [description]
      */
-    private function payWeChat()
+    private function payWeChat(Request $request)
     {
-        $str = '26351824092183721983701293801924720640218730219730101928301724546';
-
+        $recharge = $this->infoChek($request, 1);
         $code = '0330ZSor0EVZ9g1bItqr0G91pr00ZSoj';
-        $num = 'YMZH'.substr(str_shuffle($str),3,10);
-        $mini = \EasyWeChat::miniProgram();
+        $mini = \EasyWeChat::miniProgram();        
 
-        // $result = $mini->auth->session($code);
         $openid = 'ogYH-4ywq56jfVxxx4wOMSBumf9Q';
-        // return $result['openid'];
-        $payment = \EasyWeChat::payment(); // 微信支付
-        // return $payment->order;
+
+        $payment = \EasyWeChat::payment(); // 微信支付方法
+
         $result = $payment->order->unify([
-            'body'         => 'water',
-            'out_trade_no' => $num,
+            'body'         => '个人水费充值', //商品名
+            'out_trade_no' => $recharge->number, //订单号
             'trade_type'   => 'JSAPI',  // 必须为JSAPI
             'openid'       => $openid, // 这里的openid为付款人的openid
-            'total_fee'    => 1, // 总价
+            'total_fee'    => ($recharge->sum)*100, // 总价
         ]);
 
-        // return $result;
         // 如果成功生成统一下单的订单，那么进行二次签名
         if ($result['return_code'] === 'SUCCESS') {
             // 二次签名的参数必须与下面相同
             $params = [
-                'appId'     => 'wx092b3da2b80333d3',
-                'timeStamp' => time(),
-                'nonceStr'  => $result['nonce_str'],
-                'package'   => 'prepay_id=' . $result['prepay_id'],
-                'signType'  => 'MD5',
+                'appId'     => 'wx092b3da2b80333d3', //小程序id
+                'timeStamp' => time(), //时间
+                'nonceStr'  => $result['nonce_str'], //随机字符串
+                'package'   => 'prepay_id=' . $result['prepay_id'], //包
+                'signType'  => 'MD5',  //加密类型
             ];
 
             // config('wechat.payment.default.key')为商户的key
-            $params['paySign'] = generate_sign($params, config('wechat.payment.default.key'));
-            $params['timeStamp'] = (string)$params['timeStamp'];
+            $params['paySign'] = generate_sign($params, config('wechat.payment.default.key'));//加密字符串
+            $params['timeStamp'] = (string)$params['timeStamp'];//时间戳
             return $params;
         } else {
             return $result;
@@ -103,9 +102,88 @@ class PayController extends Controller
      * @DateTime 2019-06-03
      * @return   [type]     [description]
      */
-    private function payALi()
+    private function payALi(Request $request)
     {
+        require_once "../app/libs/alipay/aop/AopClient.php";
+        require_once "../app/libs/alipay/aop/request/AlipaySystemOauthTokenRequest.php";
+        require_once "../app/libs/alipay/aop/request/AlipayTradeCreateRequest.php";
+        require_once "../app/libs/alipay/aop/SignData.php";
+        // $recharge = $this->infoChek($request, 2);
+        $aop = new AopClient();
+        $aop->gatewayUrl = 'https://openapi.alipay.com/gateway.do';
+        $aop->appId = '2019052765384414';
+        $aop->rsaPrivateKey = config('app.aliskey');
+        $aop->alipayrsaPublicKey= config('app.aligkey');
+        $aop->apiVersion = '1.0';
+        $aop->signType = 'RSA2';
+        $aop->postCharset='utf-8';
+        $aop->format='json';
+        // $request = new AlipaySystemOauthTokenRequest();
+        // $request->setGrantType("authorization_code");
+        // $request->setCode("7012fafc15ce40f1b4b79f502ca3TC78");
+        // $result = $aop->execute($request);
+        // // return $result;
+        // $responseNode = str_replace(".", "_", $request->getApiMethodName()) . "_response";
+        // $resultId = $result->$responseNode->user_id;
+        // return $resultId;
+        $request = new AlipayTradeCreateRequest();
+        $request->setBizContent("{" .
+        "\"out_trade_no\":\"20150320010101001\",".
+        "\"total_amount\":20,".
+        "\"subject\":\"Iphone616G\",".
+        "\"body\":\"个人水费充值\",".
+        "\"buyer_id\":\"2088712388095786\"".
+        "}");
+        $result = $aop->execute ( $request); 
+        return $result;
+        $responseNode = str_replace(".", "_", $request->getApiMethodName()) . "_response";
+        $resultCode = $result->$responseNode->code;
+        if(!empty($resultCode)&&$resultCode == 10000){
+        echo "成功";
+        } else {
+        echo "失败";
+        }
+    }
 
+    /**
+     * 检查订单提交信息
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-06-06
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    private function infoChek(Request $request, $type)
+    {
+        $user = $request->user;
+        if (!$equipment_id = $request->input('equipment_id')) 
+        {
+            return failure('请选择水表号');
+        }
+
+        if (!$equipment = Equipment::where('id', $equipment_id)->first()) 
+        {
+            return failure('该水表不存在');
+        }
+
+        if (!$money = $request->input('money')) 
+        {
+            return failure('请输入金额');
+        }
+
+        if (!$water_company_id = $request->input('water_company_id')) 
+        {
+            return failure('请输入缴费单位id');
+        }
+
+        if (!$water_company = WaterCompany::where('id',$water_company_id)->first()) 
+        {
+            return failure('该缴费单位不存在');
+        }
+
+        $recharge = Recharge::add($water_company, $user, $equipment, $money, $type);
+
+        return $recharge;
     }
 
 	/**

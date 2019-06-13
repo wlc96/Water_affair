@@ -15,6 +15,10 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+
+    'aliskey' => env('ALI_S_KEY'),
+    'aligkey' => env('ALI_G_KEY'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -178,6 +182,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Mrgoon\AliSms\ServiceProvider::class,
         Overtrue\LaravelWeChat\ServiceProvider::class,
+        //Hyperbolaa\Alipay\AlipayServiceProvider::class,
 
     ],
 
