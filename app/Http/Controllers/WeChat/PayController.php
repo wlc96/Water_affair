@@ -13,6 +13,7 @@ use App\UserEquipmentBind;
 use function EasyWeChat\Kernel\Support\generate_sign;
 use DB;
 use AopClient;
+use Carbon\Carbon;
 use AlipaySystemOauthTokenRequest;
 use AlipayTradeCreateRequest;
 
