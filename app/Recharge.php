@@ -71,7 +71,7 @@ class Recharge extends Model
         {
             $str = '26351824092183721983701293801924720640218730219730101928301724546';
 
-            $this_time = Carbon::now()->toDateTimeString();
+            $this_time = time();
             $num = 'YMZH'.$this_time.substr(str_shuffle($str),3,10);
 
             $user_equipment_bind = UserEquipmentBind::where('user_id', $user->id)->where('equipment_id', $equipment->id)->first();
