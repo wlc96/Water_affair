@@ -61,10 +61,15 @@ class PayController extends Controller
     private function payWeChat(Request $request)
     {
         $recharge = $this->infoChek($request, 1);
-        $code = '0330ZSor0EVZ9g1bItqr0G91pr00ZSoj';
-        $mini = \EasyWeChat::miniProgram();        
+        if (!$code = $request->input('code')) 
+        {
+            return failure('请提交code');
+        }
 
-        $openid = 'ogYH-4ywq56jfVxxx4wOMSBumf9Q';
+        $mini = \EasyWeChat::miniProgram();     
+        $result = $mini->auth->session($code);   
+
+        $openid = $result['openid'];
 
         $payment = \EasyWeChat::payment(); // 微信支付方法
 
@@ -150,6 +155,9 @@ class PayController extends Controller
         } else {
         echo "失败";
         }
+
+        https://www.merchant.com/receive_notify.htm?notify_type=trade_status_sync&notify_id=91722adff935e8cfa58b3aabf4dead6ibe&notify_time=2017-02-16 21:46:15&sign_type=RSA2&sign=WcO+t3D8Kg71dTlKwN7r9PzUOXeaBJwp8/FOuSxcuSkXsoVYxBpsAidprySCjHCjmaglNcjoKJQLJ28/Asl93joTW39FX6i07lXhnbPknezAlwmvPdnQuI01HZsZF9V1i6ggZjBiAd5lG8bZtTxZOJ87ub2i9GuJ3Nr/NUc9VeY=&refund_preset_paytool_list=[{"amount":"1.00","assert_type_code":"HEMA"}]&charge_amount=8.88&charge_flags=bluesea_1&settlement_id=2018101610032004620239146945
+
     }
 
     /**
@@ -176,16 +184,6 @@ class PayController extends Controller
         if (!$money = $request->input('money')) 
         {
             return failure('请输入金额');
-        }
-
-        if (!$water_company_id = $request->input('water_company_id')) 
-        {
-            return failure('请输入缴费单位id');
-        }
-
-        if (!$water_company = WaterCompany::where('id',$water_company_id)->first()) 
-        {
-            return failure('该缴费单位不存在');
         }
 
         $recharge = Recharge::add($water_company, $user, $equipment, $money, $type);
@@ -289,9 +287,9 @@ class PayController extends Controller
     {
         $response = $this->wxpay->handlePaidNotify(function ($message, $fail) {
             // 使用通知里的 "微信支付订单号" 或者 "商户订单号" 去自己的数据库找到订单
-            $order = Recharge::where('order_no', $message['out_trade_no'])->first();
+            $order = Recharge::where('number', $message['out_trade_no'])->first();
             //订单不存在或者订单已支付
-            if ($order) {
+            if ($order->status == 1) {
                 return true;
             }
             if ($message['return_code'] === 'SUCCESS') { // return_code 表示通信状态，不代表支付状态
@@ -304,7 +302,10 @@ class PayController extends Controller
             } else {
                 return $fail('通信失败，请稍后再通知我');
             }
-            // $order->save(); // 保存订单
+            $equipment = $order->equipment;
+            $equipment->sum += $order->sum;
+            $equipment->save();
+            $order->save(); // 保存订单
             return true; // 返回处理完成
         });
         return response()->json(['code' => 1, 'msg' => '订单支付成功!', 'data' => $response]);

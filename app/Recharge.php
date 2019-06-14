@@ -51,4 +51,49 @@ class Recharge extends Model
 
     	return $recharges;
     }
+
+    /**
+     * 新增订单
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-06-14
+     * //todo 阶梯水价分站点
+     * @param    User       $user      [description]
+     * @param    Eloquent   $equipment [description]
+     * @param    [type]     $sum       [description]
+     * @param    [type]     $type      [description]
+     */
+    public function add(User $user, Eloquent $equipment, $sum, $type)
+    {
+        return DB::transaction(function() use ($user, $equipment, $sum, $type)
+        {
+            $str = '26351824092183721983701293801924720640218730219730101928301724546';
+
+            $this_time = Carbon::now()->toDateTimeString();
+            $num = 'YMZH'.$this_time.substr(str_shuffle($str),3,10);
+
+            $user_equipment_bind = UserEquipmentBind::where('user_id', $user->id)->where('equipment_id', $equipment->id)->first();
+            if (!$user_equipment_bind) 
+            {
+                return failure('用户未绑定水表');
+            }
+
+            $water_company = $user_equipment_bind->water_company;
+            $data = 
+            [
+                'company_id' => $equipment->station->company->id,
+                'water_company_id' => $water_company->id,
+                'number' => $num,
+                'user_id' => $user->id,
+                'station_id' => $equipment->station->id,
+                'equipment_id' => $equipment->id,
+                'sum' => $sum,
+                'type' => $type,
+            ];
+
+            $recharge = self::saveDate($data);
+            return $recharge;
+        }
+    }
+
 }
