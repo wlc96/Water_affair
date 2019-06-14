@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Examiner extends Model
 {
     use Traits\BaseModel, SoftDeletes;
-
+    protected $casts = ['created_at' => 'string'];
     /**
      * 巡检人列表
      * Please don't touch my code.

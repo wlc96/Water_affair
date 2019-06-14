@@ -12,7 +12,7 @@ use App\RoleAdminDirectoryBind;
 class Role extends Model
 {
     use Traits\BaseModel, SoftDeletes;
-
+    protected $casts = ['created_at' => 'string'];
     /**
      * 角色列表
      * Please don't touch my code.

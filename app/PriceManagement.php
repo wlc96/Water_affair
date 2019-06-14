@@ -11,7 +11,7 @@ use DB;
 class PriceManagement extends Model
 {
     use Traits\BaseModel, SoftDeletes;
-
+    protected $casts = ['created_at' => 'string'];
     /**
      * 价格管理列表
      * Please don't touch my code.

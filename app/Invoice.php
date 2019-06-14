@@ -12,7 +12,7 @@ use DB;
 class Invoice extends Model
 {
     use Traits\BaseModel, SoftDeletes;
-
+    protected $casts = ['created_at' => 'string'];
     /**
      * 发票列表
      * Please don't touch my code.

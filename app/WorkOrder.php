@@ -13,7 +13,7 @@ use DB;
 class WorkOrder extends Model
 {
     use Traits\BaseModel, SoftDeletes;
-
+    protected $casts = ['created_at' => 'string'];
     /**
      * 工单列表
      * Please don't touch my code.

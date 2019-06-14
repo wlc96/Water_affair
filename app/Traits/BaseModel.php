@@ -7,12 +7,12 @@ use Auth, Request, App\OperatingLog, App\User;
 
 trait BaseModel {
 
-        /**
-       * 默认使用时间戳戳功能
-       *
-       * @var bool
-       */
-      public $timestamps = true;
+    /**
+    * 默认使用时间戳戳功能
+    *
+    * @var bool
+    */
+    public $timestamps = true;
   
     /**
      * 是否开启对象缓存

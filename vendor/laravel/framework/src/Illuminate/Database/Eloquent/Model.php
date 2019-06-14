@@ -32,6 +32,10 @@ abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializab
      */
     protected $connection;
 
+    // private $dates = [
+    //     'created_at',
+    // ];
+
     /**
      * The table associated with the model.
      *

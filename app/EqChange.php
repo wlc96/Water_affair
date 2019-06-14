@@ -11,7 +11,7 @@ use DB;
 class EqChange extends Model
 {
     use Traits\BaseModel, SoftDeletes;
-
+    protected $casts = ['created_at' => 'string'];
     /**
      * 拆换表列表
      * Please don't touch my code.

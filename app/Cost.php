@@ -11,7 +11,7 @@ use DB;
 class Cost extends Model
 {
     use Traits\BaseModel, SoftDeletes;
-
+    protected $casts = ['created_at' => 'string'];
     /**
      * 成本信息列表（含搜索）
      * Please don't touch my code.

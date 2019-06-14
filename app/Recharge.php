@@ -12,7 +12,7 @@ use Carbon\Carbon;
 class Recharge extends Model
 {
     use Traits\BaseModel, SoftDeletes;
-
+    protected $casts = ['created_at' => 'string'];
     /**
      * 公司订单列表
      * Please don't touch my code.

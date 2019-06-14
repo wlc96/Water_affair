@@ -14,7 +14,8 @@ use DB;
 class Event extends Model
 {
     use Traits\BaseModel, SoftDeletes;
-
+    protected $casts = ['created_at' => 'string'];
+    
     public static function list(Company $company, $number, $start, $end, $pre_page)
     {
     	$orders = self::where('company_id', $company->id)->whereBetween('created_at', [$start, $end])->paginate($pre_page);

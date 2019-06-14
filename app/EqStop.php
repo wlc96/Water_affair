@@ -11,7 +11,7 @@ use DB;
 class EqStop extends Model
 {
     use Traits\BaseModel, SoftDeletes;
-
+    protected $casts = ['created_at' => 'string'];
     /**
      * 停水列表
      * Please don't touch my code.

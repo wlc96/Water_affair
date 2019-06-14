@@ -12,7 +12,7 @@ use App\Role;
 class Admin extends Model
 {
     use Traits\BaseModel, SoftDeletes;
-	
+	protected $casts = ['created_at' => 'string'];
     /**
      * 添加管理员
      * Please don't touch my code.

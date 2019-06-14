@@ -12,7 +12,7 @@ use DB;
 class EqRecovery extends Model
 {
 	use Traits\BaseModel, SoftDeletes;
-	
+	protected $casts = ['created_at' => 'string'];
 	/**
 	 * 恢复列表
 	 * Please don't touch my code.

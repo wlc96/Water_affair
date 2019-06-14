@@ -11,7 +11,7 @@ use Carbon\Carbon;
 class Equipment extends Model
 {
     use Traits\BaseModel, SoftDeletes;
-
+    protected $casts = ['created_at' => 'string'];
     public $incrementing=false;
 
     /**

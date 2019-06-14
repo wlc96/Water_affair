@@ -14,8 +14,6 @@ class CustomException extends \Exception {
     public $data = [];
 }
 
-
-
 /**
  * [paginate_walk 分页数据拼装回调]
  * Please don't touch my code.
