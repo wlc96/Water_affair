@@ -33,7 +33,7 @@ class Examiner extends Model
         		'phone' => $value->phone,
         		'station' => $value->station->name,
         		'created_at' => $value->created_at,
-        		'admin' => $value->admin->name,
+        		'admin' => $value->admin->relname,
         	];
 
         	return $data;
