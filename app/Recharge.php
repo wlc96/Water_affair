@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Company;
+use DB;
+use Carbon\Carbon;
 
 
 class Recharge extends Model
@@ -63,7 +65,7 @@ class Recharge extends Model
      * @param    [type]     $sum       [description]
      * @param    [type]     $type      [description]
      */
-    public function add(User $user, Eloquent $equipment, $sum, $type)
+    public static function add(User $user, Equipment $equipment, $sum, $type)
     {
         return DB::transaction(function() use ($user, $equipment, $sum, $type)
         {
@@ -91,9 +93,9 @@ class Recharge extends Model
                 'type' => $type,
             ];
 
-            $recharge = self::saveDate($data);
+            $recharge = self::saveData($data);
             return $recharge;
-        }
+        });
     }
 
 }

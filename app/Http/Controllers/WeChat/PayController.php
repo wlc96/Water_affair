@@ -186,7 +186,7 @@ class PayController extends Controller
             return failure('请输入金额');
         }
 
-        $recharge = Recharge::add($water_company, $user, $equipment, $money, $type);
+        $recharge = Recharge::add($user, $equipment, $money, $type);
 
         return $recharge;
     }
