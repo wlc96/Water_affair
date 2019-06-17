@@ -304,11 +304,12 @@ class PayController extends Controller
                 return $fail('通信失败，请稍后再通知我');
             }
             $equipment = $order->equipment;
-            $equipment->sum += $order->sum;
+            $equipment->surplus_money += $order->sum;
             $equipment->save();
             $order->save(); // 保存订单
             return true; // 返回处理完成
         });
         return response()->json(['code' => 1, 'msg' => '订单支付成功!', 'data' => $response]);
     }
+
 }
