@@ -102,7 +102,7 @@ class User extends Model
         $times = [];
         foreach ($recharges as $recharge) 
         {
-            $month = $recharge->created_at->startOfMonth();
+            $month = $recharge->created_at;
             array_push($times, $month);
             $times = array_unique($times);
         }
