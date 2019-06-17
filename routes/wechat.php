@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 */
 Route::middleware('ajax')->namespace('WeChat')->group(function()
 {
+	Route::any('callback', 'PayController@wechatNotify');
+	
 	//用户登陆接口
 	Route::post('user/login', 'UserController@login');
 
@@ -70,8 +72,6 @@ Route::middleware('ajax')->namespace('WeChat')->group(function()
 		{
 			//城市信息接口
 			Route::post('pay', 'PayController@pay');
-
-			Route::any('callback', 'PayController@wechatNotify');
 
 			//城市信息接口
 			Route::post('citys', 'PayController@waterCityList');
