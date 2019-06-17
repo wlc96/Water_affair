@@ -127,7 +127,7 @@ class PayController extends Controller
         $aop->appId = '2019052765384414';
         $aop->rsaPrivateKey = config('app.aliskey');
         $aop->alipayrsaPublicKey= config('app.aligkey');
-        $aop->notify_url = 'https://w.ym-zh.cn/wecaht/alicallback';
+        // $aop->notify_url = 'https://w.ym-zh.cn/wecaht/alicallback';
         $aop->apiVersion = '1.0';
         $aop->signType = 'RSA2';
         $aop->postCharset='utf-8';
