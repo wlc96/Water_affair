@@ -110,12 +110,13 @@ class PayController extends Controller
      */
     private function payALi(Request $request)
     {
+        $recharge = $this->infoChek($request, 2);
         $code = $request->input('code');
-        $money = $request->input('money');
-        $str = '26351824092183721983701293801924720640218730219730101928301724546';
+        // $money = $request->input('money');
+        // $str = '26351824092183721983701293801924720640218730219730101928301724546';
 
-        $this_time = Carbon::now()->toDateTimeString();
-        $num = 'YMZH'.$this_time.substr(str_shuffle($str),3,10);
+        // $this_time = Carbon::now()->toDateTimeString();
+        // $num = 'YMZH'.$this_time.substr(str_shuffle($str),3,10);
         require_once "../app/libs/alipay/aop/AopClient.php";
         require_once "../app/libs/alipay/aop/request/AlipaySystemOauthTokenRequest.php";
         require_once "../app/libs/alipay/aop/request/AlipayTradeCreateRequest.php";
@@ -126,6 +127,7 @@ class PayController extends Controller
         $aop->appId = '2019052765384414';
         $aop->rsaPrivateKey = config('app.aliskey');
         $aop->alipayrsaPublicKey= config('app.aligkey');
+        $aop->notify_url = 'https://w.ym-zh.cn/wecaht/alicallback';
         $aop->apiVersion = '1.0';
         $aop->signType = 'RSA2';
         $aop->postCharset='utf-8';
@@ -140,13 +142,13 @@ class PayController extends Controller
         // return $resultId;
         $request = new AlipayTradeCreateRequest();
         $request->setBizContent("{" .
-        "\"out_trade_no\":\"".$num."\",".
-        "\"total_amount\":".$money.",".
+        "\"out_trade_no\":\"".$recharge->number."\",".
+        "\"total_amount\":".$recharge->sum.",".
         "\"subject\":\"个人水费充值\",".
         "\"body\":\"个人水费充值\",".
         "\"buyer_id\":\"".$resultId."\"".
         "}");
-        $result = $aop->execute ( $request); 
+        $result = $aop->execute ($request); 
         return $result;
         $responseNode = str_replace(".", "_", $request->getApiMethodName()) . "_response";
         $resultCode = $result->$responseNode->code;
@@ -191,91 +193,6 @@ class PayController extends Controller
         return $recharge;
     }
 
-	/**
-	 * 获取水务公司城市列表
-	 * Please don't touch my code.
-	 * @Author   wulichuan
-	 * @DateTime 2019-05-29
-	 * @param    Request    $request [description]
-	 * @return   [type]              [description]
-	 */
-    public function waterCityList(Request $request)
-    {
-    	$data = WaterCity::list();
-
-    	return success(['data' => $data]);
-    }
-
-    /**
-     * todo 户名校验
-     * 用户绑定水表
-     * Please don't touch my code.
-     * @Author   wulichuan
-     * @DateTime 2019-05-29
-     * @param    Request    $request [description]
-     * @return   [type]              [description]
-     */
-    public function bindEquipment(Request $request)
-    {
-    	$user = $request->user;
-    	if (!$water_company_id = $request->input('water_company_id')) 
-    	{
-    		return failure('请输入缴费单位id');
-    	}
-
-    	if (!$water_company = WaterCompany::where('id', $water_company_id)->first()) 
-    	{
-    		return failure('该水务公司不存在');
-    	}
-
-    	if (!$group_id = $request->input('group_id')) 
-    	{
-    		return failure('请选择组id');
-    	}
-
-    	if (!$group = UserGroup::where('id', $group_id)->first()) 
-    	{
-    		return failure('该分组不存在');
-    	}
-
-    	if (!$equipment_id = $request->input('equipment_id')) 
-    	{
-    		return failure('请输入水表号');
-    	}
-
-    	if (!$equipment = Equipment::where('id', $equipment_id)->first()) 
-    	{
-    		return failure('该水表不存在');
-    	}
-
-    	if (!$hu_name = $request->input('hu_name')) 
-    	{
-    		return failure('请输入户名');
-    	}
-
-    	return DB::transaction(function() use ($user, $water_company, $equipment, $group, $hu_name)
-    	{
-    		$data = UserEquipmentBind::add($user, $water_company, $equipment, $group, $hu_name);
-    		
-    		return success(['data' => $data]);
-    	});
-    }
-
-    /**
-     * 水表分组列表
-     * Please don't touch my code.
-     * @Author   wulichuan
-     * @DateTime 2019-05-30
-     * @param    Request    $request [description]
-     * @return   [type]              [description]
-     */
-    public function groupList(Request $request)
-    {
-    	$datas = UserGroup::all();
-
-    	return success(['data' => $datas]);
-    }
-
     /**
      * 微信回调
      * Please don't touch my code.
@@ -310,6 +227,98 @@ class PayController extends Controller
             return true; // 返回处理完成
         });
         return response()->json(['code' => 1, 'msg' => '订单支付成功!', 'data' => $response]);
+    }
+
+    public function aliNotify(Request $request)
+    {
+        Storage::put('test.txt', $request);
+
+        return true;
+    }
+
+    /**
+     * 获取水务公司城市列表
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-05-29
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function waterCityList(Request $request)
+    {
+        $data = WaterCity::list();
+
+        return success(['data' => $data]);
+    }
+
+    /**
+     * todo 户名校验
+     * 用户绑定水表
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-05-29
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function bindEquipment(Request $request)
+    {
+        $user = $request->user;
+        if (!$water_company_id = $request->input('water_company_id')) 
+        {
+            return failure('请输入缴费单位id');
+        }
+
+        if (!$water_company = WaterCompany::where('id', $water_company_id)->first()) 
+        {
+            return failure('该水务公司不存在');
+        }
+
+        if (!$group_id = $request->input('group_id')) 
+        {
+            return failure('请选择组id');
+        }
+
+        if (!$group = UserGroup::where('id', $group_id)->first()) 
+        {
+            return failure('该分组不存在');
+        }
+
+        if (!$equipment_id = $request->input('equipment_id')) 
+        {
+            return failure('请输入水表号');
+        }
+
+        if (!$equipment = Equipment::where('id', $equipment_id)->first()) 
+        {
+            return failure('该水表不存在');
+        }
+
+        if (!$hu_name = $request->input('hu_name')) 
+        {
+            return failure('请输入户名');
+        }
+
+        return DB::transaction(function() use ($user, $water_company, $equipment, $group, $hu_name)
+        {
+            $data = UserEquipmentBind::add($user, $water_company, $equipment, $group, $hu_name);
+            
+            return success(['data' => $data]);
+        });
+    }
+
+    /**
+     * 水表分组列表
+     * Please don't touch my code.
+     * @Author   wulichuan
+     * @DateTime 2019-05-30
+     * @param    Request    $request [description]
+     * @return   [type]              [description]
+     */
+    public function groupList(Request $request)
+    {
+        $datas = UserGroup::all();
+
+        return success(['data' => $datas]);
     }
 
 }
