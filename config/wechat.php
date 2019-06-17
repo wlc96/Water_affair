@@ -112,7 +112,7 @@ return [
             'key'                => env('WECHAT_PAYMENT_KEY', 'YMZHwechatpay91110105MA01FD97XPC'),
             // 'cert_path'          => env('WECHAT_PAYMENT_CERT_PATH', 'path/to/cert/apiclient_cert.pem'),    // XXX: 绝对路径！！！！
             // 'key_path'           => env('WECHAT_PAYMENT_KEY_PATH', 'path/to/cert/apiclient_key.pem'),      // XXX: 绝对路径！！！！
-            'notify_url'         => 'http://ym-iot.local',                           // 默认支付结果通知地址
+            'notify_url'         => 'https://w.ym-zh.cn/wechat/pay/callback',                           // 默认支付结果通知地址
         ],
         // ...
     ],
