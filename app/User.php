@@ -102,7 +102,7 @@ class User extends Model
         $times = [];
         foreach ($recharges as $recharge) 
         {
-            $month = $recharge->created_at->startOfMonth()->toDateString();
+            $month = $recharge->created_at->startOfMonth();
             array_push($times, $month);
             $times = array_unique($times);
         }
@@ -119,7 +119,7 @@ class User extends Model
                 $rdata[] = 
                 [
                     'id' => $day_recharge->id,
-                    'time' => $day_recharge->created_at->toDateTimeString(),
+                    'time' => $day_recharge->created_at,
                     'equipment_id' => $day_recharge->equipment_id,
                     'money' => $day_recharge->sum,
                 ];
