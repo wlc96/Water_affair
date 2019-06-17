@@ -16,6 +16,7 @@ use AopClient;
 use Carbon\Carbon;
 use AlipaySystemOauthTokenRequest;
 use AlipayTradeCreateRequest;
+use Illuminate\Support\Facades\Storage;
 
 class PayController extends Controller
 {
@@ -148,7 +149,7 @@ class PayController extends Controller
         "\"body\":\"个人水费充值\",".
         "\"buyer_id\":\"".$resultId."\"".
         "}");
-        $request->setNotifyUrl('https://w.ym-zh.cn/wecaht/alicallback');
+        $request->setNotifyUrl('https://w.ym-zh.cn/wechat/alicallback');
         $result = $aop->execute ($request); 
         return $result;
         $responseNode = str_replace(".", "_", $request->getApiMethodName()) . "_response";
